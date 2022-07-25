@@ -10,13 +10,13 @@
 </head>
 <body>
     <div class="flex">
-        <div class="flex-none w-14 h-14">
+        <div class="flex-none w-14 h-14 bg-amber-700 mx-2">
             010
         </div>
-        <div class="flex-1 w-64">
+        <div class="flex-1 w-64 bg-black text-white mx-2">
             02
         </div>
-        <div class="flex-1 w-32">
+        <div class="flex-1 w-32 bg-black text-white">
             03
         </div>
     </div>
