@@ -1,0 +1,12 @@
+.content-wrapper {
+    height: calc(100vh - 56px);
+}
+
+.icon {
+    font-size: 17px;
+}
+
+.active-link {
+    @apply bg-blue-700;
+    @apply text-white;
+}
