@@ -12,7 +12,12 @@
 }
 
 .is-active {
-    @apply bg-amber-400;
+    @apply bg-blue-700;
     @apply text-white;
     @apply font-medium;
+}
+
+.period-metrika-link {
+    border: 1px solid;
+    @apply border-gray-400;
 }

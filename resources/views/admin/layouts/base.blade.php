@@ -29,13 +29,13 @@
             <img src="/images/logo/logo-white.png" class="w-32 h-8" alt="Логотип компании">
         </div>
         <div class="logout">
-            <a href="#" class="px-2 py-2"><i class="zmdi zmdi-power text-2xl text-white"></i></a>
+            <a href="#" class="px-2 py-2"><i class="zmdi zmdi-power text-2xl text-white" title="Выйти из системы"></i></a>
         </div>
     </div>
 </header>
 <section class="content-wrapper mt-[56px] flex">
     <aside class="sidebar p-3 bg-gray-100">
-        <div class="menu-wrapper">
+        <div class="menu-wrapper py-5">
             <div class="menu-item mb-3 w-56">
                 <p class="text-gray-600 font-bold mb-1 uppercase text-sm tracking-wider">{{__('Статистика')}}</p>
                 <a href="#"
