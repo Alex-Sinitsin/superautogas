@@ -10,3 +10,9 @@
     @apply bg-blue-700;
     @apply text-white;
 }
+
+.is-active {
+    @apply bg-amber-400;
+    @apply text-white;
+    @apply font-medium;
+}
