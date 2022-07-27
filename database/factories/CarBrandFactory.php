@@ -17,9 +17,9 @@ class CarBrandFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->randomElement(['Lexus', 'Toyota', 'Ford', 'Opel']),
-            'logotype' => fake()->image('storage/car_brands', 300, 300, null, false),
-            'is_active' => rand(0, 1)
+            'name' => fake()->randomElements(['Lexus', 'Toyota', 'Ford', 'Opel', 'Suzuki', 'UAZ', 'Lada'], 1, false)[0],
+            'logotype' => fake()->imageUrl(300, 300),
+            'is_active' => 1
         ];
     }
 }

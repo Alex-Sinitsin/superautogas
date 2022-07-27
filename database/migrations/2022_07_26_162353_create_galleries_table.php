@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('car_model_id')->constrained();
             $table->string('image');
+            $table->timestamps();
         });
     }
 

@@ -13,10 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect('/admin');
-});
+Route::redirect('/', '/admin/login');
 
-Route::get('/admin', function () {
-    return view('admin.dashboard.index');
+Route::prefix('admin')->group(function () {
+    Route::group(['middleware' => ['guest']], function() {
+        Route::get('/login', [\App\Http\Controllers\LoginController::class, 'show'])->name('admin.login');
+        Route::post('/login', [\App\Http\Controllers\LoginController::class, 'login'])->name('admin.login.perform');
+    });
+
+    Route::group(['middleware' => ['auth']], function() {
+        Route::get('/', \App\Http\Controllers\AdminController::class)->name('admin.index');
+        Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('admin.logout.perform');
+    });
 });
