@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function __invoke() {
-        return dd(123);
+        return view('admin.dashboard.index');
     }
 }

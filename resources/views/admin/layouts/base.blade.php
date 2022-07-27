@@ -23,6 +23,12 @@
 </head>
 <body>
     <x-header/>
-    @yield('content')
+    <div class="content-wrapper absolute top-[56px] left-0 right-0 bottom-0 flex">
+        @if(session()->has('success'))
+            <p>{{ session()->get('success') }}</p>
+        @endif
+        @yield('content')
+    </div>
+
 </body>
 </html>
