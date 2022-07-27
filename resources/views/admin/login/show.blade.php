@@ -33,7 +33,7 @@
                         <h2 class="text-2xl font-bold text-gray-800 text-left mb-5">
                             Sigin
                         </h2>
-                        <form action="" class="w-full">
+                        <form method="POST" action={{ route('admin.login.perform') }} class="w-full">
                             <div id="input" class="flex flex-col w-full my-5">
                                 <label for="username" class="text-gray-500 mb-2"
                                 >Username</label
