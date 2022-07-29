@@ -1,5 +1,5 @@
 .content-wrapper {
-    height: calc(100vh - 56px);
+    height: calc(100vh - 72px);
 }
 
 .icon {
@@ -11,13 +11,23 @@
     @apply text-white;
 }
 
-.is-active {
-    @apply bg-blue-700;
-    @apply text-white;
-    @apply font-medium;
+.is-active-metrika-link {
+    @apply bg-green-700 !important;
+    @apply text-white !important;
+    @apply font-medium !important;
 }
 
 .period-metrika-link {
     border: 1px solid;
-    @apply border-gray-400;
+    @apply border-green-500;
+}
+
+.apexcharts-toolbar {
+    display: none !important;
+}
+
+.apexcharts-title-text {
+    font-weight: 600;
+    font-family: "Rubik", sans-serif;
+    font-size: 25px;
 }

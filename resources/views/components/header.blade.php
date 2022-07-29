@@ -1,12 +1,21 @@
 <header class="header fixed top-0 left-0 right-0 w-full bg-blue-600 py-3 px-7">
-    <div class="md:container md:mx-auto flex justify-between items-center">
+    <div class="sm:container sm:mx-auto flex justify-between items-center">
         <div class="logotype">
             <img src="/images/logo/logo-white.png" class="w-32 h-8" alt="Логотип компании">
         </div>
         @auth
-            <div class="logout">
-                <a href="#" class="px-2 py-2"><i class="zmdi zmdi-power text-2xl text-white"
-                                                 title="Выйти из системы"></i></a>
+            <div class="logout flex items-center">
+                <div class="user flex items-center mr-4">
+                    <div class="avatar rounded-full mr-3"><i class="zmdi zmdi-account-o text-white text-[2.8em]"></i></div>
+                    <div class="user-data text-white">
+                        <span class="block font-bold">{{ auth()->user()->name }}</span>
+                        <span class="block text-sm mt-[-3px] font-light">{{ auth()->user()->role == 'admin' ? __('Администратор') : '' }}</span>
+                    </div>
+                </div>
+                <a href="{{ route('admin.logout.perform') }}">
+                    <i class="zmdi zmdi-power text-3xl text-white"
+                        title="Выйти из системы"></i>
+                </a>
             </div>
         @endauth
     </div>

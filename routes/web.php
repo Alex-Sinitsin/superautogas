@@ -23,6 +23,7 @@ Route::prefix('admin')->group(function () {
 
     Route::group(['middleware' => ['auth']], function() {
         Route::get('/', \App\Http\Controllers\AdminController::class)->name('admin.index');
+        Route::resource('posts', \App\Http\Controllers\PostController::class);
         Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('admin.logout.perform');
     });
 });

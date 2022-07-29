@@ -1,5 +1,5 @@
 @import "material-design-iconic-font.min.css";
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600&display=swap');
 @import "admin.css";
 
 @tailwind base;
@@ -7,5 +7,9 @@
 @tailwind utilities;
 
 body {
-    font-family: "Roboto", sans-serif;
+    font-family: "Rubik", sans-serif;
+}
+
+.subtitle {
+    font-weight: lighter;
 }

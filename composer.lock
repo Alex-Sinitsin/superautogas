@@ -4,8 +4,122 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8ea6e37b9df13f57393d506f3e6b0b46",
+    "content-hash": "da314d682a5bfaa34b35ae3023bd3547",
     "packages": [
+        {
+            "name": "arielmejiadev/larapex-charts",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ArielMejiaDev/larapex-charts.git",
+                "reference": "9e1f7e08cb5a5fa662ff8c83464d8e78379b4031"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ArielMejiaDev/larapex-charts/zipball/9e1f7e08cb5a5fa662ff8c83464d8e78379b4031",
+                "reference": "9e1f7e08cb5a5fa662ff8c83464d8e78379b4031",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/support": "^8.0|^9.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ArielMejiaDev\\LarapexCharts\\LarapexChartsServiceProvider"
+                    ],
+                    "aliases": {
+                        "LarapexChart": "ArielMejiaDev\\LarapexCharts\\Facades\\LarapexChart"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ArielMejiaDev\\LarapexCharts\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ArielMejiaDev",
+                    "email": "arielmejiadev@gmail.com"
+                }
+            ],
+            "description": "Package to provide easy api to build apex charts on Laravel",
+            "homepage": "https://larapex-charts.netlify.app/",
+            "keywords": [
+                "apexcharts",
+                "arielmejiadev",
+                "charts",
+                "larapex"
+            ],
+            "support": {
+                "issues": "https://github.com/ArielMejiaDev/larapex-charts/issues",
+                "source": "https://github.com/ArielMejiaDev/larapex-charts/tree/4.1.0"
+            },
+            "time": "2022-07-12T14:15:25+00:00"
+        },
+        {
+            "name": "axp-dev/ya-metrika",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/axp-dev/ya-metrika.git",
+                "reference": "2e44053c361781630064d4c83548dce4c736f4be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/axp-dev/ya-metrika/zipball/2e44053c361781630064d4c83548dce4c736f4be",
+                "reference": "2e44053c361781630064d4c83548dce4c736f4be",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.4.3",
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "monolog/monolog": "^2.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AXP\\YaMetrika\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Pushkarev",
+                    "email": "axp-dev@yandex.com",
+                    "homepage": "https://github.com/axp-dev"
+                }
+            ],
+            "description": "Yandex Metrika API Library",
+            "homepage": "https://github.com/axp-dev/ya-metrika",
+            "keywords": [
+                "api",
+                "metrika",
+                "yandex"
+            ],
+            "support": {
+                "issues": "https://github.com/axp-dev/ya-metrika/issues",
+                "source": "https://github.com/axp-dev/ya-metrika/tree/2.1.0"
+            },
+            "time": "2022-05-30T04:49:09+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.9.3",

@@ -20,15 +20,14 @@
     <meta name="msapplication-TileColor" content="#fefefe"/>
     <meta name="theme-color" content="#ffffff"/>
     @vite('resources/css/app.css')
+    @stack('styles')
 </head>
 <body>
     <x-header/>
-    <div class="content-wrapper absolute top-[56px] left-0 right-0 bottom-0 flex">
-        @if(session()->has('success'))
-            <p>{{ session()->get('success') }}</p>
-        @endif
+    <div class="content-wrapper absolute top-[72px] left-0 right-0 bottom-0 flex">
         @yield('content')
     </div>
 
+    @stack('scripts')
 </body>
 </html>

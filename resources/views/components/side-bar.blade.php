@@ -1,8 +1,8 @@
-<aside class="sidebar p-3 bg-gray-100">
+<aside class="sidebar p-3 bg-gray-100 h-full">
     <div class="menu-wrapper py-5">
         <div class="menu-item mb-3 w-56">
             <p class="text-gray-600 font-bold mb-1 uppercase text-sm tracking-wider">{{__('Статистика')}}</p>
-            <a href="#"
+            <a href="{{ route("admin.index", ['period' => 7]) }}"
                class="block text-base hover:bg-blue-700 hover:text-white font-medium px-7 py-2 transition-colors active-link">
                 <i class="zmdi zmdi-view-dashboard mr-1.5 icon"></i>
                 <span>{{__('Яндекс Метрика')}}</span>
@@ -10,7 +10,7 @@
         </div>
         <div class="menu-item mb-3">
             <p class="text-gray-600 font-bold mb-1 uppercase text-sm tracking-wider">{{__('Контент')}}</p>
-            <a href="#"
+            <a href="{{ route("posts.index") }}"
                class="block text-base hover:bg-blue-700 hover:text-white font-medium px-7 py-2 transition-colors">
                 <i class="zmdi zmdi-collection-text mr-1.5 icon"></i>
                 <span>{{__('Новости')}}</span>

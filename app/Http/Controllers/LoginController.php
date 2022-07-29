@@ -29,6 +29,7 @@ class LoginController extends Controller
     {
         if(!Auth::validate($request->validated())):
             return redirect()->to(route('admin.login'))
+                ->withInput()
                 ->withErrors(['auth' => trans('auth.failed', [], 'ru')]);
         endif;
 
@@ -36,7 +37,7 @@ class LoginController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('admin.index'))->with(['success'=> 'Logged IN!']);;
+        return redirect(route('admin.index', ['period' => 7]));
     }
 
     /**
@@ -51,18 +52,5 @@ class LoginController extends Controller
         Auth::logout();
 
         return redirect(route('admin.login'));
-    }
-
-    /**
-     * Handle response after user authenticated
-     *
-     * @param Request $request
-     * @param Auth $user
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    protected function authenticated(Request $request, $user)
-    {
-        return redirect()->intended();
     }
 }
