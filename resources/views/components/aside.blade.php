@@ -1,20 +1,18 @@
 <aside class="sidebar p-3 bg-gray-100 h-full">
-    <div class="menu-wrapper py-5">
-        <div class="menu-item mb-3 w-56">
-            <p class="text-gray-600 font-bold mb-1 uppercase text-sm tracking-wider">{{__('Статистика')}}</p>
-            <a href="{{ route("admin.index", ['period' => 7]) }}"
-               class="block text-base hover:bg-blue-700 hover:text-white font-medium px-7 py-2 transition-colors active-link">
-                <i class="zmdi zmdi-view-dashboard mr-1.5 icon"></i>
-                <span>{{__('Яндекс Метрика')}}</span>
-            </a>
-        </div>
-        <div class="menu-item mb-3">
-            <p class="text-gray-600 font-bold mb-1 uppercase text-sm tracking-wider">{{__('Контент')}}</p>
-            <a href="{{ route("posts.index") }}"
-               class="block text-base hover:bg-blue-700 hover:text-white font-medium px-7 py-2 transition-colors">
-                <i class="zmdi zmdi-collection-text mr-1.5 icon"></i>
-                <span>{{__('Новости')}}</span>
-            </a>
+    <div class="menu-wrapper py-5 w-56">
+        <x-aside.item title="Статистика">
+            <x-aside.link link="{{ route('admin.index', ['period' => 7]) }}"
+                          title="Яндекс Метрика"
+                          icon="view-dashboard"
+                          class="{{ active_link('admin*') }}"
+            />
+        </x-aside.item>
+        <x-aside.item title="Контент">
+            <x-aside.link link="{{ route('posts.index') }}"
+                          title="Новости"
+                          icon="collection-text"
+                          class="{{ active_link('posts*') }}"
+            />
             <a href="#"
                class="block text-base hover:bg-blue-700 hover:text-white font-medium px-7 py-2 transition-colors">
                 <i class="zmdi zmdi-collection-image mr-1.5 icon"></i>
@@ -30,30 +28,27 @@
                 <i class="zmdi zmdi-view-carousel mr-1.5 icon"></i>
                 <span>{{__('Сертификаты')}}</span>
             </a>
-        </div>
-        <div class="menu-item mb-3">
-            <p class="text-gray-600 font-bold mb-1 uppercase text-sm tracking-wider">{{__('Общая информация')}}</p>
+        </x-aside.item>
+        <x-aside.item title="Общая информация">
             <a href="#"
                class="block text-base hover:bg-blue-700 hover:text-white font-medium px-7 py-2 transition-colors">
                 <i class="zmdi zmdi-store mr-1.5 icon"></i>
                 <span>{{__('О компании')}}</span>
             </a>
-        </div>
-        <div class="menu-item mb-3">
-            <p class="text-gray-600 font-bold mb-1 uppercase text-sm tracking-wider">{{__('Конфиденциальность')}}</p>
+        </x-aside.item>
+        <x-aside.item title="Конфиденциальность">
             <a href="#"
                class="block text-base hover:bg-blue-700 hover:text-white font-medium px-7 py-2 transition-colors">
                 <i class="zmdi zmdi-face mr-1.5 icon"></i>
                 <span>{{__('Персональные данные')}}</span>
             </a>
-        </div>
-        <div class="menu-item">
-            <p class="text-gray-600 font-bold mb-1 uppercase text-sm tracking-wider">{{__('Администрирование')}}</p>
+        </x-aside.item>
+        <x-aside.item title="Администрирование">
             <a href="#"
                class="block text-base hover:bg-blue-700 hover:text-white font-medium px-7 py-2 transition-colors">
                 <i class="zmdi zmdi-accounts mr-1.5 icon"></i>
                 <span>{{__('Пользователи')}}</span>
             </a>
-        </div>
+        </x-aside.item>
     </div>
 </aside>

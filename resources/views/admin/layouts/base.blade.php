@@ -23,11 +23,12 @@
     @stack('styles')
 </head>
 <body>
-    <x-header/>
-    <div class="content-wrapper absolute top-[72px] left-0 right-0 bottom-0 flex">
+    <x-header />
+    <div class="content-wrapper absolute top-[70px] left-0 right-0 bottom-0 flex">
         @yield('content')
     </div>
 
+    @vite('resources/js/app.js')
     @stack('scripts')
 </body>
 </html>

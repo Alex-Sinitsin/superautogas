@@ -31,3 +31,17 @@
     font-family: "Rubik", sans-serif;
     font-size: 25px;
 }
+
+.grid-sizer,
+.grid-item {
+    width: 32%;
+    margin-bottom: 10px;
+}
+
+.dropdown {
+    display: none;
+}
+
+.grid-item.is-active .dropdown {
+    display: block;
+}

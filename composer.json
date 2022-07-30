@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "arielmejiadev/larapex-charts": "^4.1",
         "axp-dev/ya-metrika": "^2.1",
+        "diglactic/laravel-breadcrumbs": "^8.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^2.14.1",
@@ -32,7 +33,10 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "scripts": {
         "post-autoload-dump": [
