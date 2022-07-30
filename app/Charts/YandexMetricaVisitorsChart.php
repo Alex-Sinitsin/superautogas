@@ -17,7 +17,7 @@ class YandexMetricaVisitorsChart
 
     public function build($period): AreaChart
     {
-        //TODO: Сделать Hepler для активной страницы и выбранного периода метрики
+        //TODO: Сделать Hepler для выбранного периода метрики
         $metrika = new YandexMetrikaController();
         $visitors = $metrika->getVisitors($period);
 
