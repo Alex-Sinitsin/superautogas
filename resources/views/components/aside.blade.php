@@ -1,4 +1,4 @@
-<aside class="sidebar p-3 bg-gray-100 h-full">
+<aside {{ $attributes->class(["sidebar p-3 bg-gray-100 h-full"]) }}>
     <div class="menu-wrapper py-5 w-56">
         <x-aside.item title="Статистика">
             <x-aside.link link="{{ route('admin.index', ['period' => 7]) }}"

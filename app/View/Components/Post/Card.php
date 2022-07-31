@@ -1,19 +1,21 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Post;
 
 use Illuminate\View\Component;
 
-class Header extends Component
+class Card extends Component
 {
+    public $post;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($post)
     {
-        //
+        $this->post = $post;
     }
 
     /**
@@ -23,6 +25,6 @@ class Header extends Component
      */
     public function render()
     {
-        return view('components.header');
+        return view('components.post.card');
     }
 }

@@ -1,0 +1,1 @@
+<input {{ $attributes }} {{ $attributes->class(["block appearance-none border-2 border-gray-100 rounded-lg px-4 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600 focus:shadow-lg"]) }}>

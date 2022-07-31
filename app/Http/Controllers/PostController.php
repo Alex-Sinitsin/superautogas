@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostStoreRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('admin.posts.index');
+        $posts = Post::all();
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -65,11 +67,19 @@ class PostController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(PostStoreRequest $request, $id)
     {
-        //
+        $data = $request->validated();
+        $post = Post::findOrFail($id);
+
+        $post->title = $data['title'];
+        $post->text = $data['text'];
+        $post->is_published = $data['is_published'];
+        $post->save();
+
+        return redirect(route('posts.index'));
     }
 
     /**
@@ -80,6 +90,6 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd('123');
     }
 }

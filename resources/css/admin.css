@@ -32,16 +32,24 @@
     font-size: 25px;
 }
 
-.grid-sizer,
-.grid-item {
-    width: 32%;
-    margin-bottom: 10px;
-}
-
 .dropdown {
     display: none;
 }
 
 .grid-item.is-active .dropdown {
     display: block;
+}
+
+@media screen and (max-width: 426px) {
+    .content-wrapper {
+        top: 128px !important;
+    }
+
+    .header .logotype {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+}
+@media screen and (max-width: 639px) {
+
 }

@@ -7,9 +7,11 @@
     <div class="content p-5 w-screen overflow-auto">
         <x-page.header>
             <x-page.title title="Статистика Яндекс Метрики" icon="view-dashboard">
-                <p class="page-subtitle subtitle block text-xs text-gray-500 tracking-wide">
-                    {{ __('Главная страница панели управления') }}
-                </p>
+                <x-slot name="subtitle">
+                    <p class="page-subtitle subtitle block text-xs text-gray-500 tracking-wide">
+                        {{ __('Главная страница панели управления') }}
+                    </p>
+                </x-slot>
             </x-page.title>
             <div class="period-button-group flex items-center flex-wrap">
                 <a href="{{ route("admin.index", ['period' => 7]) }}"

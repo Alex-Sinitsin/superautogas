@@ -6,14 +6,19 @@ use Illuminate\View\Component;
 
 class Link extends Component
 {
+    public $title = '';
+    public $icon = '';
+    public $link = '';
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($title, $icon, $link)
     {
-        //
+        $this->title = $title;
+        $this->icon = $icon;
+        $this->link = $link;
     }
 
     /**

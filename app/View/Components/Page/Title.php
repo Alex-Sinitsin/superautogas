@@ -6,14 +6,19 @@ use Illuminate\View\Component;
 
 class Title extends Component
 {
+    public $title = '';
+    public $icon = '';
+    public $subtitle = '';
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(String $title, $icon)
     {
-        //
+        $this->title = $title;
+        $this->icon = $icon;
     }
 
     /**
