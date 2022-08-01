@@ -9,10 +9,12 @@
         "arielmejiadev/larapex-charts": "^4.1",
         "axp-dev/ya-metrika": "^2.1",
         "diglactic/laravel-breadcrumbs": "^8.0",
+        "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^2.14.1",
-        "laravel/tinker": "^2.7"
+        "laravel/tinker": "^2.7",
+        "te7a-houdini/laravel-trix": "^2.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

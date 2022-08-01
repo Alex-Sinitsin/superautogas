@@ -5,6 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf" content="{{ csrf_token() }}" />
     <title>@yield('title')</title>
     <link rel="prefetch" href={{asset('/fonts/Material-Design-Iconic-Font.ttf')}} as="font">
     <link rel="prefetch" href={{asset('/fonts/Material-Design-Iconic-Font.woff')}} as="font">
@@ -21,8 +22,9 @@
     <meta name="theme-color" content="#ffffff"/>
     @vite('resources/css/app.css')
     @stack('styles')
+    @stack('trix')
 </head>
-<body>
+<body class="admin-body">
     <x-header />
     <div class="content-wrapper absolute top-[70px] left-0 right-0 bottom-0 flex">
         @yield('content')

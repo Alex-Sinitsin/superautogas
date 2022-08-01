@@ -18,7 +18,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => fake()->realText(25),
-            'text' => fake()->text()
+            'content' => fake()->text()
         ];
     }
 }

@@ -19,14 +19,15 @@ class YandexMetricaVisitorsChart
     {
         //TODO: Сделать Hepler для выбранного периода метрики
         $metrika = new YandexMetrikaController();
-        $visitors = $metrika->getVisitors($period);
-
+//        $visitors = $metrika->getVisitors($period);
+//        $visitors = [];
+//
         return $this->chart->areaChart()
             ->setTitle('Посещения')
-            ->addData('Посещения', $visitors['visits']['values'])
-            ->addData('Просмотры', $visitors['pageviews']['values'])
-            ->addData('Уникальные пользователи', $visitors['users']['values'])
-            ->setXAxis($visitors['dimensions'])
+//            ->addData('Посещения', $visitors['visits']['values'])
+//            ->addData('Просмотры', $visitors['pageviews']['values'])
+//            ->addData('Уникальные пользователи', $visitors['users']['values'])
+//            ->setXAxis($visitors['dimensions'])
             ->setGrid()
             ->setHeight(420);
     }

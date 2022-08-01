@@ -1,3 +1,15 @@
+.admin-body {
+    overflow-y: hidden;
+}
+
+blockquote {
+    display: block;
+    @apply border-l-4;
+    @apply border-gray-400;
+    @apply px-3;
+    font-size: 1.4rem;
+}
+
 .content-wrapper {
     height: calc(100vh - 72px);
 }
@@ -28,7 +40,6 @@
 
 .apexcharts-title-text {
     font-weight: 600;
-    font-family: "Rubik", sans-serif;
     font-size: 25px;
 }
 
@@ -40,6 +51,65 @@
     display: block;
 }
 
+.edit-content .form__chk-label {
+    position: relative;
+    padding-left: 35px;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    font-size: 1rem;
+    font-weight: 400;
+    user-select: none;
+}
+
+.edit-content .form__chk-label::before,
+.edit-content .form__chk-label::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    z-index: 0;
+    border: 2px solid #5a5a5a;
+    border-radius: 1px;
+    margin-top: 2px;
+    transition: 0.2s ease-out;
+    cursor: pointer;
+}
+
+.edit-content .form__chk {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+}
+
+.edit-content .form__chk:checked + .form__chk-label::before {
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #5264AE;
+    background-color: #5264AE;
+    z-index: 0;
+}
+
+.edit-content .form__chk:checked + .form__chk-label::after {
+    top: 2px;
+    left: 1px;
+    width: 6px;
+    height: 13px;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotateZ(37deg);
+    transform-origin: 100% 100%;
+}
+
+.posts-grid .grid-item .attachment__caption {
+    display: none;
+}
+
 @media screen and (max-width: 426px) {
     .content-wrapper {
         top: 128px !important;
@@ -49,7 +119,4 @@
         margin-bottom: 10px;
         width: 100%;
     }
-}
-@media screen and (max-width: 639px) {
-
 }

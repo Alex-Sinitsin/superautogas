@@ -150,7 +150,9 @@ return [
     */
 
     'attributes' => [
-        'password' => 'пароль'
+        'password' => 'пароль',
+        'title' => 'заголовок',
+        'content' => 'контент',
     ],
 
 ];
