@@ -1,4 +1,5 @@
 @props([
+'model' => null,
 'disabledFields' => [],
 'post' => [],
 'label' => '',
@@ -14,7 +15,7 @@
 
 <textarea id="x" name="content" class="hidden">{{ $post ? $post->content : old('content') }}</textarea>
 <div class="trix {{$hidden ? 'hidden' : ''}}">
-    @trix(\App\Models\Post::class, 'content', ['id' => 'x', 'hideTools' => $disabledFields ? $disabledFields : []])
+    @trix($model, 'content', ['id' => 'x', 'hideTools' => $disabledFields ? $disabledFields : []])
 </div>
 
 @error('content')

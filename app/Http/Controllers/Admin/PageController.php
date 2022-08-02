@@ -27,10 +27,10 @@ class PageController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(Page $page)
     {
-        if(Route::is('*pages*')) return view('admin.pages.create');
-        elseif(Route::is('about*')) return view('admin.about.create');
+        if(Route::is('pages*')) return view('admin.pages.create', compact('page'));
+        elseif(Route::is('about*')) return view('admin.about.create', compact('page'));
     }
 
     /**
@@ -107,7 +107,6 @@ class PageController extends Controller
     {
         $page = Page::findOrFail($id);
         $page->delete();
-        Page::deleted($page);
         if(Route::is('pages*')) return redirect(route('pages.index'))->withSuccess('Страница успешно удалена!');
         elseif(Route::is('about*')) return redirect(route('about.index'))->withSuccess('Страница успешно удалена!');
     }

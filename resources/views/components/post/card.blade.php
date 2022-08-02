@@ -29,7 +29,7 @@
                 </div>
                 <div class="dropdown__content-item">
                     <x-form method="DELETE" action="{{ route('posts.destroy', ['post' => $post->id]) }}">
-                        <x-button type="submit" text="Удалить" icon="delete" color="red" class="px-2" />
+                        <x-button type="submit" text="Удалить" icon="delete" class="px-2 text-red-600 hover:text-red-800" />
                     </x-form>
                 </div>
             </div>

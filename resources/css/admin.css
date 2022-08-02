@@ -2,6 +2,16 @@
     overflow-y: hidden;
 }
 
+trix-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.pages .pages-body .attachment figcaption{
+    display: none;
+}
+
 .pages h1 {
     @apply text-2xl;
 }

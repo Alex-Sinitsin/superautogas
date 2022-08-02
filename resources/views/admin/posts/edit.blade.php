@@ -15,7 +15,7 @@
             <x-form method="PUT" action="{{ route('posts.update', ['post' => $post->id]) }}">
                 <x-form.input type="text" name="title" value="{{$post->title }}" label="{{ __('Заголовок') }}" placeholder="{{ __('Введите заголовок') }}" required />
 
-                <x-form.trix label="Контент" :disabledFields="['file-tools']" :post=$post required/>
+                <x-form.trix label="Контент" :disabledFields="['file-tools']" :model=$post :post=$post required/>
 
                 <x-form.checkbox name="is_published" label="Опубликовать" :checked="$post->is_published"/>
 

@@ -17,7 +17,7 @@
             <x-form method="POST" action="{{ route('about.store') }}" multipart>
                 <x-form.input type="text" name="title" value="{{ old('title') }}" label="{{ __('Заголовок') }}" placeholder="{{ __('Введите заголовок') }}" required />
 
-                <x-form.trix label="Контент" />
+                <x-form.trix label="Контент" :model=$page />
 
                 <x-button type="submit" text="Сохранить" icon="card-sd" color="green" class="bg-green-200 hover:bg-green-600 hover:text-white mt-5" />
             </x-form>

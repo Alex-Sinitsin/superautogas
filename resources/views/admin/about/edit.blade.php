@@ -15,7 +15,7 @@
             <x-form method="PUT" action="{{ route('about.update', ['about' => $page->id]) }}">
                 <x-form.input type="text" name="title" value="{{$page->title }}" label="{{ __('Заголовок') }}" placeholder="{{ __('Введите заголовок') }}" required />
 
-                <x-form.trix label="Контент" :disabledFields="['file-tools']" :post=$page/>
+                <x-form.trix label="Контент" :post=$page :model=$page />
 
                 <x-button type="submit" text="Сохранить" icon="card-sd" color="green" class="bg-green-200 hover:bg-green-600 hover:text-white mt-5" />
             </x-form>
