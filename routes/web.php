@@ -17,14 +17,18 @@ Route::redirect('/', '/admin/login');
 
 Route::prefix('admin')->group(function () {
     Route::group(['middleware' => ['guest']], function() {
-        Route::get('/login', [\App\Http\Controllers\LoginController::class, 'show'])->name('admin.login');
-        Route::post('/login', [\App\Http\Controllers\LoginController::class, 'login'])->name('admin.login.perform');
+        Route::get('/login', [\App\Http\Controllers\Admin\LoginController::class, 'show'])->name('admin.login');
+        Route::post('/login', [\App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin.login.perform');
     });
 
     Route::group(['middleware' => ['auth']], function() {
-        Route::get('/', \App\Http\Controllers\AdminController::class)->name('admin.index');
-        Route::resource('posts', \App\Http\Controllers\PostController::class);
-        Route::post('posts/upload', [\App\Http\Controllers\PostController::class, 'upload']);
-        Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('admin.logout.perform');
+        Route::get('/', \App\Http\Controllers\Admin\AdminController::class)->name('admin.index');
+        //Posts
+        Route::resource('posts', \App\Http\Controllers\Admin\PostController::class);
+        Route::post('posts/upload', [\App\Http\Controllers\Admin\PostController::class, 'upload']);
+        //Pages
+        Route::resource('pages', \App\Http\Controllers\Admin\PageController::class);
+        Route::resource('about', \App\Http\Controllers\Admin\PageController::class);
+        Route::get('/logout', [\App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout.perform');
     });
 });

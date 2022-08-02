@@ -7,7 +7,7 @@
     <div class="content p-5 w-screen overflow-auto">
         <x-page.header>
             <x-page.title title="Редактирование новости № {{ $post->id }}" icon="edit">
-                <x-slot name="subtitle">{{ Breadcrumbs::render('post', $post) }}</x-slot>
+                <x-slot name="subtitle">{{ Breadcrumbs::render('admin.post.edit', $post) }}</x-slot>
             </x-page.title>
             <div class="buttons"></div>
         </x-page.header>

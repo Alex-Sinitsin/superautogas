@@ -2,7 +2,6 @@
 
 namespace App\Charts;
 
-use App\Http\Controllers\YandexMetrikaController;
 use ArielMejiaDev\LarapexCharts\AreaChart;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 

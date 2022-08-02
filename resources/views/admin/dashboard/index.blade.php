@@ -70,8 +70,8 @@
                         </div>
                         <div class="totals flex flex-col lg:px-12 w-full lg:w-fit">
                             <h5 class="text-2xl font-bold w-full">Общая статистика</h5>
-                            <x-widget title="Визиты" icon="sign-in" color="amber" value="{{$visitors['totals'][0]['visits']}}" />
-                            <x-widget title="Просмотры" icon="eye" color="blue" value="{{$visitors['totals'][0]['pageviews']}}" />
+                            <x-widget title="Визиты" icon="sign-in" color="green" value="{{$visitors['totals'][0]['visits']}}" />
+                            <x-widget title="Просмотры" icon="eye" color="violet" value="{{$visitors['totals'][0]['pageviews']}}" />
                             <x-widget title="Пользователи" icon="accounts" color="red" value="{{$visitors['totals'][0]['users']}}" />
                         </div>
                     </div>

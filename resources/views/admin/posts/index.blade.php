@@ -7,7 +7,7 @@
     <div class="content p-5 w-screen overflow-auto">
         <x-page.header>
             <x-page.title title="Новости" icon="collection-text">
-                <x-slot name="subtitle">{{ Breadcrumbs::render('posts') }}</x-slot>
+                <x-slot name="subtitle">{{ Breadcrumbs::render('admin.posts') }}</x-slot>
             </x-page.title>
             <div class="buttons my-5 sm:my-0 w-full sm:w-fit">
                 <a href="{{ route("posts.create") }}"

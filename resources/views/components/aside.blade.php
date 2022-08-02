@@ -30,18 +30,18 @@
             </a>
         </x-aside.item>
         <x-aside.item title="Общая информация">
-            <a href="#"
-               class="block text-base hover:bg-blue-700 hover:text-white font-medium px-7 py-2 transition-colors">
-                <i class="zmdi zmdi-store mr-1.5 icon"></i>
-                <span>{{__('О компании')}}</span>
-            </a>
+            <x-aside.link link="{{ route('about.index') }}"
+                          title="О компании"
+                          icon="store"
+                          class="{{ active_link('about*') }}"
+            />
         </x-aside.item>
         <x-aside.item title="Конфиденциальность">
-            <a href="#"
-               class="block text-base hover:bg-blue-700 hover:text-white font-medium px-7 py-2 transition-colors">
-                <i class="zmdi zmdi-face mr-1.5 icon"></i>
-                <span>{{__('Персональные данные')}}</span>
-            </a>
+            <x-aside.link link="{{ route('pages.index') }}"
+                          title="Политика конфиденциальности"
+                          icon="face"
+                          class="{{ active_link('pages*') }}"
+            />
         </x-aside.item>
         <x-aside.item title="Администрирование">
             <a href="#"

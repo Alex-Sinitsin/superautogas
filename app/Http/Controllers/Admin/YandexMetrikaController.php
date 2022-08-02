@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 use AXP\YaMetrika\Client;
 use AXP\YaMetrika\YaMetrika;
 use Illuminate\Support\Facades\Date;

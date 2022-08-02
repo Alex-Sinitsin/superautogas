@@ -6,7 +6,7 @@
         @auth
             <div class="logout flex items-center">
                 <div class="user flex items-center mr-4">
-                    <div class="avatar rounded-full mr-3"><i class="zmdi zmdi-account-o text-white text-[2.8em]"></i></div>
+                    <div class="avatar rounded-full mr-3"><i class="zmdi zmdi-account text-white text-[2.8em]"></i></div>
                     <div class="user-data text-white">
                         <span class="block font-bold">{{ auth()->user()->name }}</span>
                         <span class="block text-sm mt-[-3px] font-light">{{ auth()->user()->role == 'admin' ? __('Администратор') : '' }}</span>

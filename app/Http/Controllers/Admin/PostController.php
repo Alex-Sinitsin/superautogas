@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PostStoreRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -37,9 +38,10 @@ class PostController extends Controller
      */
     public function store(PostStoreRequest $request)
     {
+        $data = $request->validated();
         Post::create([
-            'title' => request('title'),
-            'content' => request('content'),
+            'title' => $data['title'],
+            'content' => $data['content'],
             'post-trixFields' => request('post-trixFields'),
             'attachment-post-trixFields' => request('attachment-post-trixFields')
         ]);
@@ -68,25 +70,6 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         return view('admin.posts.edit', compact('post'));
-    }
-
-    /**
-     * Store attachments to disk
-     *
-     * @return string
-     */
-    public function upload(Request $request)
-    {
-        if($request->has('file')) {
-            $filenameWithExt = $request->file('file')->getClientOriginalName();
-            $filename= pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $filenameExt = $request->file('file')->getClientOriginalExtension();
-            $filenametostore = md5($filename) .'.'. $filenameExt;
-
-            $request->file('file')->storeAs(storage_path('/trix'), $filenametostore);
-            echo storage_path('trix/'.$filenametostore, );
-            exit;
-        }
     }
 
     /**

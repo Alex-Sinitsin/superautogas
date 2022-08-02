@@ -21,6 +21,7 @@
     <meta name="msapplication-TileColor" content="#fefefe"/>
     <meta name="theme-color" content="#ffffff"/>
     @vite('resources/css/app.css')
+    @vite('resources/css/admin.css')
     @stack('styles')
     @stack('trix')
 </head>
