@@ -3,15 +3,15 @@
 @section('title', 'Новости')
 
 @section('content')
-    <x-aside class="hidden lg:block"/>
+    <x-aside />
     <div class="content p-5 w-screen overflow-auto">
         <x-page.header>
             <x-page.title title="Новости" icon="collection-text">
                 <x-slot name="subtitle">{{ Breadcrumbs::render('posts') }}</x-slot>
             </x-page.title>
-            <div class="buttons">
+            <div class="buttons my-5 sm:my-0 w-full sm:w-fit">
                 <a href="{{ route("posts.create") }}"
-                   class="px-3 py-2.5 mr-2 my-1 bg-red-200 text-red-800 text-sm rounded hover:bg-red-600 hover:text-white transition-colors">
+                   class="block px-3 py-2.5 mr-2 my-1 bg-red-200 text-red-800 text-sm rounded hover:bg-red-600 hover:text-white transition-colors text-center w-full sm:w-fit sm:inline-block sm:text-left">
                     <i class="zmdi zmdi-collection-add mr-2 align-middle"></i>
                     <span class="align-middle">{{ __('Добавить') }}</span>
                 </a>
@@ -21,21 +21,6 @@
             <div class="bg-green-100 rounded-lg py-4 px-6 mb-4 text-base text-green-700 mb-3" role="alert">
                 <i class="zmdi zmdi-notifications align-middle text-lg mr-2"></i>
                 <span class="align-middle">{{ session()->get('success') }}</span>
-            </div>
-        @elseif (session()->has('error'))
-            <div class="bg-red-100 rounded-lg py-4 px-6 mb-4 text-base text-red-700 mb-3" role="alert">
-                <i class="zmdi zmdi-notifications align-middle text-lg mr-2"></i>
-                <span class="align-middle">{{ session()->get('error') }}</span>
-            </div>
-        @endif
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
             </div>
         @endif
 

@@ -16,31 +16,20 @@
                 <div class="dropdown__content-item border-b-2 border-b-gray-100">
                     <x-form method="PUT" action="{{ route('posts.update', ['post' => $post->id]) }}">
                         <x-form.input type="text" name="title" value="{{$post->title}}" class="hidden"/>
-                        <textarea name="content" value="{{$post->content}}" class="hidden">{{$post->content}}</textarea>
-                        <input name="is_published" value="{{ $post->is_published ? 0 : 1 }}"
-                                      {{ $post->is_published ? 'checked=false' : 'checked=true' }} class="hidden" />
-                            @if($post->is_published)
-                                <button type="submit"
-                                        class="publish-option text-left block w-full h-full py-2 px-2 hover:text-blue-900 transition-colors">
-                                    <i class="zmdi zmdi-eye-off mr-1 align-middle"></i>
-                                    <span class="text-sm align-middle">Скрыть</span>
-                                </button>
-                            @else
-                                <button type="submit"
-                                        class="publish-option text-left block w-full h-full py-2 px-2 hover:text-blue-900 transition-colors">
-                                    <i class="zmdi zmdi-eye mr-1 align-middle"></i>
-                                    <span class="text-sm align-middle">Опубликовать</span>
-                                </button>
+                        <x-form.trix label="Контент" :post=$post required hidden/>
+                        <x-form.checkbox name="is_published" label="Опубликовать" :checked="!$post->is_published"
+                                         class="hidden"/>
+
+                        @if($post->is_published)
+                            <x-button type="submit" text="Скрыть" icon="eye-off" class="px-2 hover:text-blue-900" />
+                        @else
+                            <x-button type="submit" text="Опубликовать" icon="eye" class="px-2 hover:text-blue-900" />
                         @endif
                     </x-form>
                 </div>
                 <div class="dropdown__content-item">
                     <x-form method="DELETE" action="{{ route('posts.destroy', ['post' => $post->id]) }}">
-                        <button type="submit"
-                                class="publish-option block w-full h-full py-2 px-2 text-red-700 hover:text-red-900 transition-colors text-left">
-                            <i class="zmdi zmdi-delete mr-1 align-middle"></i>
-                            <span class="text-sm align-middle">Удалить</span>
-                        </button>
+                        <x-button type="submit" text="Удалить" icon="delete" color="red" class="px-2" />
                     </x-form>
                 </div>
             </div>
