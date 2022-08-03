@@ -1,4 +1,4 @@
-@props(['label' => '', 'name' => 'checkbox', 'checked' => true ])
+@props(['label' => '', 'name' => 'checkbox', 'checked' => false ])
 
 <div {{$attributes->class(["my-5"])}}>
     <input type="checkbox" name="{{$name}}" class="form__chk" id="form__chk" {{ $checked ? 'checked' : '' }}>

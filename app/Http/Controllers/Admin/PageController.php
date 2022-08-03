@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PageStoreRequest;
 use App\Models\Page;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 class PageController extends Controller
 {
@@ -18,8 +16,7 @@ class PageController extends Controller
     public function index()
     {
         $pages = Page::all();
-        if(Route::is('pages*')) return view('admin.pages.index', compact('pages'));
-        else return view('admin.about.index', compact('pages'));
+        return view('admin.pages.index', compact('pages'));
     }
 
     /**
@@ -29,8 +26,7 @@ class PageController extends Controller
      */
     public function create(Page $page)
     {
-        if(Route::is('pages*')) return view('admin.pages.create', compact('page'));
-        elseif(Route::is('about*')) return view('admin.about.create', compact('page'));
+        return view('admin.pages.create', compact('page'));
     }
 
     /**
@@ -49,8 +45,7 @@ class PageController extends Controller
             'attachment-post-trixFields' => request('attachment-post-trixFields')
         ]);
 
-        if(Route::is('pages*')) return redirect(route('pages.index'))->withSuccess('Страница успешно создана!');
-        elseif(Route::is('about*')) return redirect(route('about.index'))->withSuccess('Страница успешно создана!');
+        return redirect(route('pages.index'))->withSuccess('Страница успешно создана!');
     }
 
     /**
@@ -73,8 +68,7 @@ class PageController extends Controller
     public function edit($id)
     {
         $page = Page::findOrFail($id);
-        if(Route::is('pages*')) return view('admin.pages.edit', compact('page'));
-        else return view('admin.about.edit', compact('page'));
+        return view('admin.pages.edit', compact('page'));
     }
 
     /**
@@ -93,8 +87,7 @@ class PageController extends Controller
         $page->content = $data['content'];
         $page->save();
 
-        if(Route::is('pages*')) return redirect(route('pages.index'))->withSuccess('Страница обновлена!');
-        elseif(Route::is('about*')) return redirect(route('about.index'))->withSuccess('Страница успешно обновлена!');
+        return redirect(route('pages.index'))->withSuccess('Страница обновлена!');
     }
 
     /**
@@ -107,7 +100,6 @@ class PageController extends Controller
     {
         $page = Page::findOrFail($id);
         $page->delete();
-        if(Route::is('pages*')) return redirect(route('pages.index'))->withSuccess('Страница успешно удалена!');
-        elseif(Route::is('about*')) return redirect(route('about.index'))->withSuccess('Страница успешно удалена!');
+        return redirect(route('pages.index'))->withSuccess('Страница успешно удалена!');
     }
 }

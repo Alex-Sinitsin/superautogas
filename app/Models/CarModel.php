@@ -13,4 +13,12 @@ class CarModel extends Model
         'name',
         'car_brand_id'
     ];
+
+    public function images() {
+        return $this->hasMany(Gallery::class);
+    }
+
+    public function brand() {
+        return $this->belongsTo(CarBrand::class);
+    }
 }

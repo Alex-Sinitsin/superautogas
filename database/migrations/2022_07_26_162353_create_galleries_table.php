@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('galleries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('car_model_id')->constrained();
-            $table->string('image');
+            $table->foreignId('car_model_id')->constrained()->cascadeOnDelete();
+            $table->text('image');
             $table->timestamps();
         });
     }

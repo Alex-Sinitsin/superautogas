@@ -13,11 +13,11 @@
                           icon="collection-text"
                           class="{{ active_link('posts*') }}"
             />
-            <a href="#"
-               class="block text-base hover:bg-blue-700 hover:text-white font-medium px-7 py-2 transition-colors">
-                <i class="zmdi zmdi-collection-image mr-1.5 icon"></i>
-                <span>{{__('Галерея')}}</span>
-            </a>
+            <x-aside.link link="{{ route('galleries.index') }}"
+                          title="Наши работы"
+                          icon="collection-image"
+                          class="{{ active_link('galleries*') }}"
+            />
             <a href="#"
                class="block text-base hover:bg-blue-700 hover:text-white font-medium px-7 py-2 transition-colors">
                 <i class="zmdi zmdi-comment-text-alt mr-1.5 icon"></i>
@@ -29,17 +29,10 @@
                 <span>{{__('Сертификаты')}}</span>
             </a>
         </x-aside.item>
-        <x-aside.item title="Общая информация">
-            <x-aside.link link="{{ route('about.index') }}"
-                          title="О компании"
-                          icon="store"
-                          class="{{ active_link('about*') }}"
-            />
-        </x-aside.item>
-        <x-aside.item title="Конфиденциальность">
+        <x-aside.item title="WYSIWYG разделы">
             <x-aside.link link="{{ route('pages.index') }}"
-                          title="Политика конфиденциальности"
-                          icon="face"
+                          title="Разделы"
+                          icon="view-carousel"
                           class="{{ active_link('pages*') }}"
             />
         </x-aside.item>

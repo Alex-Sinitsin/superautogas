@@ -19,18 +19,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         User::factory()->create([
-             'name' => 'Алексей Артемович',
-             'email' => 'lehych99@gmail.com',
-             'password' => 123,
-             'role' => 'admin'
-         ]);
-         Post::factory(5)->create();
-         Testimonial::factory(15)->create();
-         CarBrand::factory(3)->create();
-         Page::factory()->create([
-             'title' => 'Политика конфиденциальности',
-             'content' => ''
-         ]);
+        User::factory()->create([
+            'name' => 'Алексей Артемович',
+            'email' => 'lehych99@gmail.com',
+            'password' => 123,
+            'role' => 'admin'
+        ]);
+        Post::factory(5)->create();
+        Testimonial::factory(15)->create();
+        CarBrand::factory(3)->create();
+        Page::factory()->create([
+            'title' => 'Политика конфиденциальности',
+            'content' => ''
+        ]);
+        Page::factory()->create([
+            'title' => 'О компании',
+            'content' => ''
+        ]);
     }
 }

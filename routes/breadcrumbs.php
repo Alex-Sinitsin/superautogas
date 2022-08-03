@@ -27,7 +27,7 @@ Breadcrumbs::for('admin.post.create', function (BreadcrumbTrail $trail) {
 //Pages
 Breadcrumbs::for('admin.pages', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
-    $trail->push('Конфиденциальность', route('pages.index'));
+    $trail->push('Разделы', route('pages.index'));
 });
 
 Breadcrumbs::for('admin.pages.edit', function (BreadcrumbTrail $trail, $page) {
@@ -35,21 +35,14 @@ Breadcrumbs::for('admin.pages.edit', function (BreadcrumbTrail $trail, $page) {
     $trail->push('Редактироввание страницы', route('pages.edit', $page));
 });
 
-Breadcrumbs::for('admin.about', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin');
-    $trail->push('О компании', route('about.index'));
-});
-
-Breadcrumbs::for('admin.about.edit', function (BreadcrumbTrail $trail, $page) {
-    $trail->parent('admin.about');
-    $trail->push('Редактироввание страницы', route('about.edit', $page));
-});
 
 Breadcrumbs::for('admin.pages.create', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.pages');
     $trail->push('Создание новой страницы', route('pages.create'));
 });
-Breadcrumbs::for('admin.about.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.about');
-    $trail->push('Создание новой страницы', route('about.create'));
+
+//Galleries
+Breadcrumbs::for('admin.galleries', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Наши работы', route('galleries.index'));
 });

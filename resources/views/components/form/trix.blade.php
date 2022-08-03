@@ -13,7 +13,7 @@
 </label>
 @endif
 
-<textarea id="x" name="content" class="hidden">{{ $post ? $post->content : old('content') }}</textarea>
+<textarea id="x" name="content" class="hidden">{!! $post ? $post->content : old('content') !!}</textarea>
 <div class="trix {{$hidden ? 'hidden' : ''}}">
     @trix($model, 'content', ['id' => 'x', 'hideTools' => $disabledFields ? $disabledFields : []])
 </div>

@@ -6,6 +6,8 @@ trix-toolbar {
     position: sticky;
     top: 0;
     z-index: 1;
+    background-color: #fff;
+    margin: 0 10px;
 }
 
 .pages .pages-body .attachment figcaption{
@@ -74,7 +76,7 @@ blockquote {
     display: block;
 }
 
-.edit-content .form__chk-label {
+.form__chk-label {
     position: relative;
     padding-left: 35px;
     display: inline-block;
@@ -85,8 +87,8 @@ blockquote {
     user-select: none;
 }
 
-.edit-content .form__chk-label::before,
-.edit-content .form__chk-label::after {
+.form__chk-label::before,
+.form__chk-label::after {
     content: "";
     position: absolute;
     top: 0;
@@ -101,13 +103,13 @@ blockquote {
     cursor: pointer;
 }
 
-.edit-content .form__chk {
+.form__chk {
     position: absolute;
     left: -9999px;
     opacity: 0;
 }
 
-.edit-content .form__chk:checked + .form__chk-label::before {
+.form__chk:checked + .form__chk-label::before {
     top: 0;
     width: 20px;
     height: 20px;
@@ -116,7 +118,7 @@ blockquote {
     z-index: 0;
 }
 
-.edit-content .form__chk:checked + .form__chk-label::after {
+.form__chk:checked + .form__chk-label::after {
     top: 2px;
     left: 1px;
     width: 6px;
@@ -131,6 +133,17 @@ blockquote {
 
 .posts-grid .grid-item .attachment__caption {
     display: none;
+}
+
+.logo-drop-area {
+    @apply text-gray-500;
+}
+
+.logo-drop-area.active {
+    @apply ring;
+    @apply ring-green-600;
+    @apply text-green-600;
+    @apply transition-colors;
 }
 
 @media screen and (max-width: 426px) {

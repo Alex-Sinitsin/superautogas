@@ -13,4 +13,8 @@ class Gallery extends Model
         'car_model_id',
         'image'
     ];
+
+    public function model() {
+        return $this->belongsTo(CarModel::class);
+    }
 }

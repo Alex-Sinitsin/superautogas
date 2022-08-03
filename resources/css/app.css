@@ -12,3 +12,8 @@ body {
 .subtitle {
     font-weight: lighter;
 }
+
+:root {
+    --animate-duration: 400ms !important;
+    --animate-delay: 0.9s !important;
+}

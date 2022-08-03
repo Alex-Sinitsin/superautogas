@@ -14,4 +14,8 @@ class CarBrand extends Model
         'logotype',
         'is_active'
     ];
+
+    public function models() {
+        return $this->hasMany(CarModel::class);
+    }
 }

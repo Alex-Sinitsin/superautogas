@@ -28,7 +28,10 @@ Route::prefix('admin')->group(function () {
         Route::post('posts/upload', [\App\Http\Controllers\Admin\PostController::class, 'upload']);
         //Pages
         Route::resource('pages', \App\Http\Controllers\Admin\PageController::class);
-        Route::resource('about', \App\Http\Controllers\Admin\PageController::class);
+        //Galleries
+        Route::resource('galleries',\App\Http\Controllers\Admin\GalleryController::class);
+        Route::post('/galleries/brand/store', [\App\Http\Controllers\Admin\GalleryController::class, 'brandStore'])->name('admin.brand.store');
+
         Route::get('/logout', [\App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout.perform');
     });
 });
