@@ -10,7 +10,7 @@ trix-toolbar {
     margin: 0 10px;
 }
 
-.pages .pages-body .attachment figcaption{
+.pages .pages-body .attachment figcaption {
     display: none;
 }
 
@@ -72,7 +72,7 @@ blockquote {
     display: none;
 }
 
-.grid-item.is-active .dropdown {
+.posts-grid .grid-item.is-active .dropdown {
     display: block;
 }
 
@@ -113,8 +113,8 @@ blockquote {
     top: 0;
     width: 20px;
     height: 20px;
-    border: 2px solid #5264AE;
-    background-color: #5264AE;
+    border: 2px solid #5264ae;
+    background-color: #5264ae;
     z-index: 0;
 }
 
@@ -144,6 +144,32 @@ blockquote {
     @apply ring-green-600;
     @apply text-green-600;
     @apply transition-colors;
+}
+
+.gallery-grid,
+.gallery-grid .gallery-item {
+    transition: all 500ms ease-in-out;
+}
+
+.gallery-grid .gallery-item.active {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    transition: all 500ms ease-in-out;
+}
+
+.gallery-grid .gallery-item .brand {
+    width: calc(100% - 50px);
+}
+
+.gallery-grid .gallery-item.active .brand {
+    margin-left: 0;
+    max-width: 50%;
+}
+
+.gallery-grid .gallery-item.active .models {
+    left: 50%;
+    width: 50%;
+    transition: left 500ms ease-in-out;
 }
 
 @media screen and (max-width: 426px) {
