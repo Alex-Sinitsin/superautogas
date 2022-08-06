@@ -6,7 +6,7 @@
 <x-aside />
 <div class="content p-5 w-screen overflow-auto">
 	<x-page.header>
-		<x-page.title title="Наши работы" icon="collection-text">
+		<x-page.title title="Наши работы" icon="collection-image">
 			<x-slot name="subtitle">{{ Breadcrumbs::render('admin.galleries') }}</x-slot>
 		</x-page.title>
 		<div class="buttons my-5 sm:my-0 w-full sm:w-fit flex flex-wrap">
@@ -20,67 +20,103 @@
 	</x-page.header>
 
 	@if (session()->has('success'))
-	<div class="bg-green-100 rounded-lg py-4 px-6 mb-4 text-base text-green-700 mb-3" role="alert">
-		<i class="zmdi zmdi-notifications align-middle text-lg mr-2"></i>
+	<div class="bg-green-100 rounded-lg py-4 px-6 mb-4 text-base text-green-700" role="alert">
+		<i class="zmdi zmdi-notifications align-middle text-lg"></i>
 		<span class="align-middle">{{ session()->get('success') }}</span>
 	</div>
 	@endif
 
 	<div class="page-body h-full">
-		<div class="gallery-grid 2xl:container 2xl:mx-auto grid xl:grid-cols-3 gap-1">
-			@for ($i = 0; $i < 5; $i++) <div
-				class="gallery-item cursor-pointer rounded flex max-w-full relative flex-wrap sm:flex-nowrap border h-[250px] bg-white">
-				<div class="brand z-20 h-full bg-white">
-					{{-- <img src="/images/autovaz.png" class="object-cover h-full w-full" alt="Лого бренда"> --}}
-					{{-- <img src="/images/cadillac.png" class="h-full mx-auto" alt="Лого бренда"> --}}
-					<img src="/images/audi.png" class="w-full object-cover" alt="Лого бренда">
-				</div>
-				<div class="models h-full w-full absolute left-0 top-0">
-					<ul class="flex flex-wrap h-fit mr-10">
-						<li><a href="#"
-								class="m-1 block bg-blue-500 text-white font-semibold px-5 py-2 tracking-wide rounded">Outlander II</a>
-						</li>
-						<li><a href="#"
-								class="m-1 block bg-blue-500 text-white font-semibold px-5 py-2 tracking-wide rounded">XRay</a></li>
-						<li><a href="#" class="m-1 block bg-blue-500 text-white font-semibold px-5 py-2 tracking-wide rounded">LC
-								PRADO</a></li>
-						<li><a href="#"
-								class="m-1 block bg-blue-500 text-white font-semibold px-5 py-2 tracking-wide rounded">Octavia Tour</a>
-						</li>
-					</ul>
-					<button type="button" class="open-models-btn rounded-tr rounded-br absolute top-0 right-0 h-full w-7 bg-slate-500">
-						<i class="zmdi zmdi-chevron-right text-3xl"></i>
-					</button>
-				</div>
+		<div class="gallery-grid 2xl:container 2xl:mx-auto">
+			<div class="grid-sizer"></div>
+			@for ($i = 1; $i <= 5; $i++) <x-gallery.item>
+				<x-slot:logotype>
+					<div class="brand min-w-[200px] w-full min-h-full p-3 rounded-md flex justify-center
+						items-center shadow-lg bg-slate-100 relative">
+						<img src="/images/cadillac.png" class="h-auto w-full" alt="Логотип бренда">
+						<x-button type="button" color="amber" icon="edit"
+							class="absolute h-fit top-2 right-2 bg-amber-300 hover:bg-amber-400" />
+					</div>
+				</x-slot:logotype>
+				<ul class="flex w-full items-center flex-wrap h-full mr-10 px-2">
+					<li class="flex-auto text-center relative">
+						<a href="#"
+							class="m-1 block bg-neutral-600 hover:bg-neutral-700 transition-colors text-white font-semibold px-5 py-2.5 tracking-wide rounded cursor-pointer">
+							<span class="">Outlander II</span>
+							<div class="actions max-h-0 overflow-hidden flex items-center justify-center">
+								<span class="w-10 cursor-pointer text-amber-900 bg-amber-300 hover:bg-amber-400 py-1 rounded"><i
+										class="zmdi zmdi-edit"></i></span>
+								<span class="w-10 text-red-900 cursor-pointer bg-red-300 hover:bg-red-400 py-1 ml-1 rounded"><i
+										class="zmdi zmdi-delete"></i></span>
+							</div>
+						</a>
+					</li>
+					<li class="flex-auto text-center relative">
+						<a href="#"
+							class="m-1 block bg-neutral-600 hover:bg-neutral-700 transition-colors text-white font-semibold px-5 py-2.5 tracking-wide rounded cursor-pointer">
+							<span class="">XRay</span>
+							<div class="actions max-h-0 overflow-hidden flex items-center justify-center">
+								<span class="w-10 cursor-pointer text-amber-900 bg-amber-300 hover:bg-amber-400 py-1 rounded"><i
+										class="zmdi zmdi-edit"></i></span>
+								<span class="w-10 text-red-900 cursor-pointer bg-red-300 hover:bg-red-400 py-1 ml-1 rounded"><i
+										class="zmdi zmdi-delete"></i></span>
+							</div>
+						</a>
+					</li>
+					<li class="flex-auto text-center relative">
+						<a href="#"
+							class="m-1 block bg-neutral-600 hover:bg-neutral-700 transition-colors text-white font-semibold px-5 py-2.5 tracking-wide rounded cursor-pointer">
+							<span class="">Evolution</span>
+							<div class="actions max-h-0 overflow-hidden flex items-center justify-center">
+								<span class="w-10 cursor-pointer text-amber-900 bg-amber-300 hover:bg-amber-400 py-1 rounded"><i
+										class="zmdi zmdi-edit"></i></span>
+								<span class="w-10 text-red-900 cursor-pointer bg-red-300 hover:bg-red-400 py-1 ml-1 rounded"><i
+										class="zmdi zmdi-delete"></i></span>
+							</div>
+						</a>
+					</li>
+					<li class="flex-auto text-center relative">
+						<a href="#"
+							class="m-1 block bg-neutral-600 hover:bg-neutral-700 transition-colors text-white font-semibold px-5 py-2.5 tracking-wide rounded cursor-pointer">
+							<span class="">LC Prado </span>
+							<div class="actions max-h-0 overflow-hidden flex items-center justify-center">
+								<span class="w-10 cursor-pointer text-amber-900 bg-amber-300 hover:bg-amber-400 py-1 rounded"><i
+										class="zmdi zmdi-edit"></i></span>
+								<span class="w-10 text-red-900 cursor-pointer bg-red-300 hover:bg-red-400 py-1 ml-1 rounded"><i
+										class="zmdi zmdi-delete"></i></span>
+							</div>
+						</a>
+					</li>
+				</ul>
+				</x-gallery.item>
+				@endfor
 		</div>
-		@endfor
 	</div>
-</div>
 
-<div class="modals">
-	<!-- Modal -->
-	<x-modal id="createBrand" title="Добавление бренда автомобиля">
-		<x-form method="POST" action="{{ route('admin.brand.store') }}" class="create-brand-form" multipart>
-			<div class="form-inner flex flex-wrap">
-				<div
-					class="logo-drop-area relative flex flex-col justify-center items-center mx-auto border border-neutral-400 rounded min-w-[200px] min-h-[200px] max-h-[250px] w-full">
-					<div class="content flex flex-col py-3 justify-center items-center text-center">
-						<i class="zmdi zmdi-cloud text-5xl mb-2"></i>
-						<p class="drop-area__header px-6">Перетащите файл в эту область</p>
+	<div class="modals">
+		<!-- Modal -->
+		<x-modal id="createBrand" title="Добавление бренда автомобиля">
+			<x-form method="POST" action="{{ route('admin.brand.store') }}" class="create-brand-form" multipart>
+				<div class="form-inner flex flex-wrap">
+					<div
+						class="logo-drop-area relative flex flex-col justify-center items-center mx-auto border border-neutral-400 rounded min-w-[200px] min-h-[200px] max-h-[250px] w-full">
+						<div class="content flex flex-col py-3 justify-center items-center text-center">
+							<i class="zmdi zmdi-cloud text-5xl mb-2"></i>
+							<p class="drop-area__header px-6">Перетащите файл в эту область</p>
+						</div>
+					</div>
+					<div class="w-full">
+						<x-form.input type="text" name="name" value="{{ old('title') }}" label="{{ __('Заголовок') }}"
+							placeholder="{{ __('Введите название') }}" class="brand-name-input min-w-[300px]" required />
 					</div>
 				</div>
-				<div class="w-full">
-					<x-form.input type="text" name="name" value="{{ old('title') }}" label="{{ __('Заголовок') }}"
-						placeholder="{{ __('Введите название') }}" class="brand-name-input min-w-[300px]" required />
+				<div class="flex justify-end w-full mt-6">
+					<x-button type="submit" text="Сохранить" icon="card-sd"
+						class="submit-btn bg-violet-300 hover:bg-violet-600 hover:text-white py-2" />
 				</div>
-			</div>
-			<div class="flex justify-end w-full mt-6">
-				<x-button type="submit" text="Сохранить" icon="card-sd"
-					class="submit-btn bg-violet-300 hover:bg-violet-600 hover:text-white py-2" />
-			</div>
-		</x-form>
-	</x-modal>
-</div>
+			</x-form>
+		</x-modal>
+	</div>
 </div>
 @endsection
 
@@ -161,14 +197,12 @@
 		}
 	}
 
-	const gallerygrid = document.querySelector('.open-models-btn');
-	gallerygrid.onclick = e => {
-		let nodes = Array.prototype.slice.call(gallerygrid.children );
-    for (let i = 0; i < gallerygrid.children.length; i++) {
-      gallerygrid.children[i].classList.remove('active');
-    }
-		e.target.parentNode.parentNode.classList.toggle('active')
-  }
+	let msnry = new Masonry('.gallery-grid', {
+		columnWidth: '.grid-sizer',
+		itemSelector: '.gallery-item',
+		percentPosition: true,
+		gutter: 20
+	});
 </script>
 @endpush
 

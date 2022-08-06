@@ -19,7 +19,7 @@
         </x-page.header>
 
         @if (session()->has('success'))
-            <div class="bg-green-100 rounded-lg py-4 px-6 mb-4 text-base text-green-700 mb-3" role="alert">
+            <div class="bg-green-100 rounded-lg py-4 px-6 mb-4 text-base text-green-700" role="alert">
                 <i class="zmdi zmdi-notifications align-middle text-lg mr-2"></i>
                 <span class="align-middle">{{ session()->get('success') }}</span>
             </div>
