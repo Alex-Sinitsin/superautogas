@@ -16,12 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/admin/login');
 
 Route::prefix('admin')->group(function () {
-    Route::group(['middleware' => ['guest']], function() {
+    Route::group(['middleware' => ['guest']], function () {
         Route::get('/login', [\App\Http\Controllers\Admin\LoginController::class, 'show'])->name('admin.login');
         Route::post('/login', [\App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin.login.perform');
     });
 
-    Route::group(['middleware' => ['auth']], function() {
+    Route::group(['middleware' => ['auth']], function () {
         Route::get('/', \App\Http\Controllers\Admin\AdminController::class)->name('admin.index');
         //Posts
         Route::resource('posts', \App\Http\Controllers\Admin\PostController::class);
@@ -29,7 +29,7 @@ Route::prefix('admin')->group(function () {
         //Pages
         Route::resource('pages', \App\Http\Controllers\Admin\PageController::class);
         //Galleries
-        Route::resource('galleries',\App\Http\Controllers\Admin\GalleryController::class);
+        Route::resource('galleries', \App\Http\Controllers\Admin\GalleryController::class);
         Route::post('/galleries/brand/store', [\App\Http\Controllers\Admin\GalleryController::class, 'brandStore'])->name('admin.brand.store');
 
         Route::get('/logout', [\App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout.perform');

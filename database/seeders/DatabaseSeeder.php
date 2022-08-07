@@ -27,7 +27,6 @@ class DatabaseSeeder extends Seeder
         ]);
         Post::factory(5)->create();
         Testimonial::factory(15)->create();
-        CarBrand::factory(3)->create();
         Page::factory()->create([
             'title' => 'Политика конфиденциальности',
             'content' => ''

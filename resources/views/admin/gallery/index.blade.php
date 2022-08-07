@@ -19,12 +19,14 @@
 		</div>
 	</x-page.header>
 
-	@if (session()->has('success'))
-	<div class="bg-green-100 rounded-lg py-4 px-6 mb-4 text-base text-green-700" role="alert">
-		<i class="zmdi zmdi-notifications align-middle text-lg"></i>
-		<span class="align-middle">{{ session()->get('success') }}</span>
+	<div class="alerts">
+		@if (session()->has('success'))
+		<div class="bg-green-100 rounded-lg py-4 px-6 mb-4 text-base text-green-700" role="alert">
+			<i class="zmdi zmdi-notifications align-middle text-lg"></i>
+			<span class="align-middle">{{ session()->get('success') }}</span>
+		</div>
+		@endif
 	</div>
-	@endif
 
 	<div class="page-body h-full">
 		<div class="gallery-grid 2xl:container 2xl:mx-auto">
@@ -99,15 +101,21 @@
 			<x-form method="POST" action="{{ route('admin.brand.store') }}" class="create-brand-form" multipart>
 				<div class="form-inner flex flex-wrap">
 					<div
-						class="logo-drop-area relative flex flex-col justify-center items-center mx-auto border border-neutral-400 rounded min-w-[200px] min-h-[200px] max-h-[250px] w-full">
-						<div class="content flex flex-col py-3 justify-center items-center text-center">
+						class="logo-drop-area flex flex-col relative justify-center items-center mx-auto border border-neutral-400 rounded min-w-[200px] min-h-[200px] max-h-[250px] w-full">
+						<div class="image absolute inset-0 pointer-events-none"></div>
+						<div class="content flex flex-col py-3 justify-center items-center text-center select-none">
 							<i class="zmdi zmdi-cloud text-5xl mb-2"></i>
-							<p class="drop-area__header px-6">Перетащите файл в эту область</p>
+							<p class="drop-area__header px-6 text-sm">Перетащите файл в эту область</p>
+							<span class="drop-area__header px-6 text-sm">или </span>
+							<span class="browse block font-bold text-blue-500 hover:text-blue-700 cursor-pointer">Выберите файл</span>
+							<input type="file" name="logotype" class="drop-area__input" hidden>
 						</div>
 					</div>
+					<span class="modal-error-logotype my-2 text-red-600 hidden"></span>
 					<div class="w-full">
 						<x-form.input type="text" name="name" value="{{ old('title') }}" label="{{ __('Заголовок') }}"
 							placeholder="{{ __('Введите название') }}" class="brand-name-input min-w-[300px]" required />
+						<span class="modal-error-name my-2 block text-red-600 hidden"></span>
 					</div>
 				</div>
 				<div class="flex justify-end w-full mt-6">
@@ -135,15 +143,49 @@
 	let validFileExtensions = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
 	let drp_area = document.querySelector('.logo-drop-area');
 	let drp_area_input = drp_area.querySelector(".drop-area__input");
+	let drp_area_btn = drp_area.querySelector(".browse");
 	let frm_brand_create = document.querySelector(".create-brand-form");
 	let frm_brand_btn = document.querySelector('.create-brand-btn');
 	let frm_submit_btn = frm_brand_create.querySelector('.submit-btn');
 	let modal = document.querySelector(frm_brand_btn.getAttribute('data-bs-target'));
 	let modal_close_btn = modal.querySelector('.close-btn');
-	let drp_initialHTML = `<div class="content flex flex-col py-3 justify-center items-center text-gray-500 text-center">
-	<i class="zmdi zmdi-cloud text-5xl mb-2"></i>
-	<p class="drop-area__header px-6">Перетащите файл в эту область</p>
-  </div>`;
+
+	let file;
+  
+	async function getFile(url = '') {
+		file = await fetch(url)
+		.then(r => r.blob())
+		.then(blobImage => validFileExtensions.includes(blobImage.type) ? new File(blobImage, `image_${Math.rand() * 100}`, { type: blobImage.type}) : null);
+		showImage();
+	}
+
+	function resetValidationErrors() {
+		document.querySelector(`.modal-error-name`).classList.add('hidden');
+		document.querySelector(`.modal-error-logotype`).classList.add('hidden');
+	}
+
+	function showValidationErrors(messages) {
+			if(messages.name) {
+				document.querySelector(`.modal-error-name`).classList.remove('hidden');
+				document.querySelector(`.modal-error-name`).innerText = messages.name[0];
+			} 
+			
+			if(messages.logotype) {
+				document.querySelector(`.modal-error-logotype`).classList.remove('hidden');
+				document.querySelector(`.modal-error-logotype`).innerText = messages.logotype[0];
+			}
+	}
+
+	function closeBrandModal() {
+			modal.classList.add('hidden');
+			modal.removeAttribute('role');
+			drp_area.querySelector('.image').innerHTML = '';
+			drp_area.querySelector('.image').classList.remove('bg-white');
+			resetValidationErrors();
+			frm_brand_create.reset();
+	}
+
+	document.addEventListener('click', () => document.querySelector(`.alerts`).innerHTML = '')
 
 	if (frm_brand_btn) {
 		frm_brand_btn.addEventListener('click', () => {
@@ -152,22 +194,43 @@
 		})
 
 		modal_close_btn.addEventListener('click', () => {
-			modal.classList.add('hidden');
-			modal.removeAttribute('role');
-			drp_area.innerHTML = drp_initialHTML;
-			frm_brand_create.reset();
+			closeBrandModal();
 		})
 	}
-
-	let file;
 
 	frm_submit_btn.onclick = e => {
 		e.preventDefault();
 		let data = new FormData();
 		data.append('name', frm_brand_create.querySelector('.brand-name-input').value);
-		data.append('logotype', file);
-		axios.post("{{route('galleries.store')}}", data);
+		file ? data.append('logotype', file) : null;
+
+		resetValidationErrors();
+		
+		axios.post("{{route('admin.brand.store')}}", data)
+			.then(response => {
+				if(response.status == 200) {
+					let successAlert = `<div class="bg-green-100 rounded-lg py-4 px-6 mb-4 text-base text-green-700" role="alert"> <i class="zmdi zmdi-notifications align-middle text-lg mr-2"></i> <span class="align-middle">${response.data.message}</span></div>`;
+					document.querySelector(`.alerts`).innerHTML = successAlert;
+					closeBrandModal();
+				}
+			})
+			.catch(function (error) {
+				if (error.response) {
+					if(error.response.status == 422) {
+						showValidationErrors(error.response.data.errors);
+					}
+				}
+			});
 	}
+
+	drp_area_btn.addEventListener('click', () => {
+		drp_area_input.click();
+	})
+
+	drp_area_input.addEventListener('change', () => {
+		file = drp_area_input.files[0];
+		showImage();
+	})
 
 	drp_area.addEventListener('dragover', (e) => {
 		e.preventDefault();
@@ -184,14 +247,15 @@
 	})
 
 	function showImage() {
-		let fileType = file.type;
+		let fileType = file ? file.type : '';
 		if (!validFileExtensions.includes(fileType)) {
 			console.log('This is not an image!')
 		} else {
 			let fileReader = new FileReader();
 			fileReader.onload = () => {
 				let fileURL = fileReader.result;
-				drp_area.innerHTML = `<img src="${fileURL}" class="logo-preview mx-auto h-full" alt="Лого"/>`;
+				drp_area.querySelector('.image').innerHTML = `<img src="${fileURL}" class="logo-preview mx-auto h-full" alt="Лого"/>`;
+				drp_area.querySelector('.image').classList.add('bg-white');
 			}
 			fileReader.readAsDataURL(file);
 		}

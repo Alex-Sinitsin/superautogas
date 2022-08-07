@@ -133,10 +133,10 @@ return [
     */
 
     'custom' => [
-    'attribute-name' => [
-        'rule-name' => 'custom-message',
+        'attribute-name' => [
+            'rule-name' => 'custom-message',
+        ],
     ],
-],
 
     /*
     |--------------------------------------------------------------------------
@@ -153,6 +153,8 @@ return [
         'password' => 'пароль',
         'title' => 'заголовок',
         'content' => 'контент',
+        'logotype' => 'логотип',
+        'name' => 'название',
     ],
 
 ];
