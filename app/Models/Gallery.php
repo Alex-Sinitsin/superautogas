@@ -14,7 +14,8 @@ class Gallery extends Model
         'image'
     ];
 
-    public function model() {
+    public function model()
+    {
         return $this->belongsTo(CarModel::class);
     }
 }

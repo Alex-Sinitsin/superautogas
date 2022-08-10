@@ -12,86 +12,57 @@
 		<div class="buttons my-5 sm:my-0 w-full sm:w-fit flex flex-wrap">
 			<x-button text="Добавить марку" icon="collection-add"
 				class="create-brand-btn bg-red-200 hover:bg-red-500 hover:text-white w-full sm:w-fit my-2 sm:my-0"
-				data-bs-toggle="modal" data-bs-target="#createBrand" />
+				data-bs-toggle="modal" data-target="#createBrand" />
 			<x-button text="Добавить модель" icon="collection-add"
 				class="create-model-btn bg-red-200 hover:bg-red-500 hover:text-white w-full sm:w-fit sm:ml-2"
-				data-bs-toggle="modal" data-bs-target="#createBrand" />
+				data-bs-toggle="modal" data-target="#createModel" />
 		</div>
 	</x-page.header>
 
 	<div class="alerts">
 		@if (session()->has('success'))
 		<div class="bg-green-100 rounded-lg py-4 px-6 mb-4 text-base text-green-700" role="alert">
-			<i class="zmdi zmdi-notifications align-middle text-lg"></i>
+			<i class="zmdi zmdi-notifications align-middle text-lg mr-2"></i>
 			<span class="align-middle">{{ session()->get('success') }}</span>
 		</div>
 		@endif
 	</div>
 
-	<div class="page-body h-full">
+	<div class="page-body">
 		<div class="gallery-grid 2xl:container 2xl:mx-auto">
 			<div class="grid-sizer"></div>
-			@for ($i = 1; $i <= 5; $i++) <x-gallery.item>
+			@foreach ($brands as $brand)
+			<x-gallery.item>
 				<x-slot:logotype>
 					<div class="brand min-w-[200px] w-full min-h-full p-3 rounded-md flex justify-center
 						items-center shadow-lg bg-slate-100 relative">
-						<img src="/images/cadillac.png" class="h-auto w-full" alt="Логотип бренда">
+						<img src="/storage/{{$brand->logotype}}" class="h-auto w-full xl:w-2/3 xl:mx-auto" alt="Логотип бренда">
 						<x-button type="button" color="amber" icon="edit"
-							class="absolute h-fit top-2 right-2 bg-amber-300 hover:bg-amber-400" />
+							class="absolute h-fit top-2 right-2 bg-amber-300 hover:bg-amber-400" data-name="{{$brand->name}}"
+							data-image="{{$brand->logotype}}" />
 					</div>
 				</x-slot:logotype>
-				<ul class="flex w-full items-center flex-wrap h-full mr-10 px-2">
-					<li class="flex-auto text-center relative">
-						<a href="#"
-							class="m-1 block bg-neutral-600 hover:bg-neutral-700 transition-colors text-white font-semibold px-5 py-2.5 tracking-wide rounded cursor-pointer">
-							<span class="">Outlander II</span>
+				<ul class="flex w-full flex-wrap mr-10 px-2">
+					@foreach ($brand->models as $model)
+					<li class="flex-1 text-center relative">
+						<a href="{{route('galleries.show', ['gallery' => $model->id])}}"
+							class="model-link m-1 block bg-neutral-600 hover:bg-neutral-700 transition-colors text-white font-semibold px-5 py-2.5 tracking-wide rounded cursor-pointer">
+							<span class="">{{$model->name}}</span>
 							<div class="actions max-h-0 overflow-hidden flex items-center justify-center">
-								<span class="w-10 cursor-pointer text-amber-900 bg-amber-300 hover:bg-amber-400 py-1 rounded"><i
-										class="zmdi zmdi-edit"></i></span>
+								<span class="w-10 cursor-pointer text-amber-900 bg-amber-300 hover:bg-amber-400 py-1 rounded"
+									data-parent="{{$brand}}" data-id="{{$model->id}}" data-name="{{$model->name}}"
+									data-images="{{$model->images}}" id="edit-link">
+									<i class="zmdi zmdi-edit pointer-events-none"></i>
+								</span>
 								<span class="w-10 text-red-900 cursor-pointer bg-red-300 hover:bg-red-400 py-1 ml-1 rounded"><i
-										class="zmdi zmdi-delete"></i></span>
+										class="zmdi zmdi-delete pointer-events-none"></i></span>
 							</div>
 						</a>
 					</li>
-					<li class="flex-auto text-center relative">
-						<a href="#"
-							class="m-1 block bg-neutral-600 hover:bg-neutral-700 transition-colors text-white font-semibold px-5 py-2.5 tracking-wide rounded cursor-pointer">
-							<span class="">XRay</span>
-							<div class="actions max-h-0 overflow-hidden flex items-center justify-center">
-								<span class="w-10 cursor-pointer text-amber-900 bg-amber-300 hover:bg-amber-400 py-1 rounded"><i
-										class="zmdi zmdi-edit"></i></span>
-								<span class="w-10 text-red-900 cursor-pointer bg-red-300 hover:bg-red-400 py-1 ml-1 rounded"><i
-										class="zmdi zmdi-delete"></i></span>
-							</div>
-						</a>
-					</li>
-					<li class="flex-auto text-center relative">
-						<a href="#"
-							class="m-1 block bg-neutral-600 hover:bg-neutral-700 transition-colors text-white font-semibold px-5 py-2.5 tracking-wide rounded cursor-pointer">
-							<span class="">Evolution</span>
-							<div class="actions max-h-0 overflow-hidden flex items-center justify-center">
-								<span class="w-10 cursor-pointer text-amber-900 bg-amber-300 hover:bg-amber-400 py-1 rounded"><i
-										class="zmdi zmdi-edit"></i></span>
-								<span class="w-10 text-red-900 cursor-pointer bg-red-300 hover:bg-red-400 py-1 ml-1 rounded"><i
-										class="zmdi zmdi-delete"></i></span>
-							</div>
-						</a>
-					</li>
-					<li class="flex-auto text-center relative">
-						<a href="#"
-							class="m-1 block bg-neutral-600 hover:bg-neutral-700 transition-colors text-white font-semibold px-5 py-2.5 tracking-wide rounded cursor-pointer">
-							<span class="">LC Prado </span>
-							<div class="actions max-h-0 overflow-hidden flex items-center justify-center">
-								<span class="w-10 cursor-pointer text-amber-900 bg-amber-300 hover:bg-amber-400 py-1 rounded"><i
-										class="zmdi zmdi-edit"></i></span>
-								<span class="w-10 text-red-900 cursor-pointer bg-red-300 hover:bg-red-400 py-1 ml-1 rounded"><i
-										class="zmdi zmdi-delete"></i></span>
-							</div>
-						</a>
-					</li>
+					@endforeach
 				</ul>
-				</x-gallery.item>
-				@endfor
+			</x-gallery.item>
+			@endforeach
 		</div>
 	</div>
 
@@ -113,14 +84,54 @@
 					</div>
 					<span class="modal-error-logotype my-2 text-red-600 hidden"></span>
 					<div class="w-full">
-						<x-form.input type="text" name="name" value="{{ old('title') }}" label="{{ __('Заголовок') }}"
-							placeholder="{{ __('Введите название') }}" class="brand-name-input min-w-[300px]" required />
-						<span class="modal-error-name my-2 block text-red-600 hidden"></span>
+						<x-form.input type="text" name="name" label="Заголовок" placeholder="{{ __('Введите название') }}"
+							class="brand-name-input min-w-[300px] mb-2" required />
+						<span class="modal-error-name my-2 text-red-600 hidden"></span>
 					</div>
 				</div>
 				<div class="flex justify-end w-full mt-6">
 					<x-button type="submit" text="Сохранить" icon="card-sd"
 						class="submit-btn bg-violet-300 hover:bg-violet-600 hover:text-white py-2" />
+				</div>
+			</x-form>
+		</x-modal>
+
+		<!-- Modal -->
+		<x-modal id="createModel" title="Добавление модели автомобиля">
+			<x-form name="createModelForm" method="POST" action="{{ route('galleries.store') }}" class="create-model-form"
+				multipart>
+				<div class="form-inner flex flex-wrap">
+					<div class="form-item w-full mb-2">
+						<x-form.select name="parent" placeholder="Выберите родительскую группу" label="Родительская группа"
+							class="mb-2" required>
+							@foreach ($brands as $brand)
+							<option class="option" value="{{$brand->id}}" label="{{$brand->name}}"
+								image='/storage/{{$brand->logotype}}'>
+								{{$brand->name}}
+							</option>
+							@endforeach
+						</x-form.select>
+						<span class="modal-error-parent my-2 text-red-600 hidden"></span>
+					</div>
+					<div class="form-item w-full">
+						<x-form.input type="text" name="name" label="Название" placeholder="{{ __('Введите название') }}"
+							class="brand-name-input min-w-[300px] mb-2" required />
+						<span class="modal-error-name my-2 text-red-600 hidden"></span>
+					</div>
+
+					<div class="serverImages w-full mb-6">
+						<div class="title">
+							<p class="block text-gray-500 font-bold my-3">Изображения на сервере</p>
+						</div>
+						<div class="inner flex flex-wrap"></div>
+					</div>
+
+					<x-dropzone label="Изображения для галереи" name="images" id="dropZone" required />
+
+					<div class="flex justify-end w-full mt-3">
+						<x-button type="submit" text="Сохранить" icon="card-sd"
+							class="submit-btn bg-violet-300 hover:bg-violet-600 hover:text-white py-2" />
+					</div>
 				</div>
 			</x-form>
 		</x-modal>
@@ -130,28 +141,35 @@
 
 @push('styles')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 @endpush
 
 @push('scripts')
-<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 @endpush
 
 @push('scripts')
 <script>
-	let validFileExtensions = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+	// Upload files
+	let editMode = false;
+	let file;
+	let validFileExtensions = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/svg+xml', 'image/svg'];
+	// Create Brand Modal
+	let frm_brand_btn = document.querySelector('.create-brand-btn');
+	let modalCreateBrand = document.querySelector(frm_brand_btn.getAttribute('data-target'));
 	let drp_area = document.querySelector('.logo-drop-area');
 	let drp_area_input = drp_area.querySelector(".drop-area__input");
 	let drp_area_btn = drp_area.querySelector(".browse");
 	let frm_brand_create = document.querySelector(".create-brand-form");
-	let frm_brand_btn = document.querySelector('.create-brand-btn');
-	let frm_submit_btn = frm_brand_create.querySelector('.submit-btn');
-	let modal = document.querySelector(frm_brand_btn.getAttribute('data-bs-target'));
-	let modal_close_btn = modal.querySelector('.close-btn');
+	let frm_brand_submit_btn = frm_brand_create.querySelector('.submit-btn');
+	let modal_brand_close_btn = modalCreateBrand.querySelector('.close-btn');
+	// Create Model Modal
+	let frm_model_btn = document.querySelector('.create-model-btn');
+	let modalCreateModel = document.querySelector(frm_model_btn.getAttribute('data-target'));
+	let frm_model_create = document.querySelector(".create-model-form");
+	let modal_model_close_btn = modalCreateModel.querySelector('.close-btn');
+	let frm_model_edit_links = document.querySelectorAll('.gallery-item .actions .edit-link'); 
+	let frm_model_links = document.querySelectorAll('.gallery-item .model-link'); 
 
-	let file;
-  
 	async function getFile(url = '') {
 		file = await fetch(url)
 		.then(r => r.blob())
@@ -159,46 +177,104 @@
 		showImage();
 	}
 
-	function resetValidationErrors() {
-		document.querySelector(`.modal-error-name`).classList.add('hidden');
-		document.querySelector(`.modal-error-logotype`).classList.add('hidden');
+	window.addEventListener("load", function() {
+		let alertsDiv = document.querySelector('.alerts');
+		showAlert('Модель автомобиля успешно добавлена!', 'mcSuccess', 'mcSuccess');
+		showAlert('Бренд автомобиля успешно добавлен!', 'bcSuccess', 'bcSuccess');
+		showAlert('Модель автомобиля успешно обновлена!', 'muSuccess', 'muSuccess');
+	});
+
+	function showAlert(message, itemClass, storageItemName) {
+		let alertsDiv = document.querySelector('.alerts');
+		if(localStorage.getItem(storageItemName) == 'true') {
+			if(alertsDiv) {
+				alertsDiv.insertAdjacentHTML('afterbegin', `<div class="${itemClass} bg-green-100 rounded-lg py-4 px-6 mb-4 text-base text-green-700" role="alert"> <i class="zmdi zmdi-notifications align-middle text-lg mr-2"></i><span class="align-middle">${message}</span></div>`);
+				localStorage.setItem(storageItemName, false);
+			}
+			let elem = document.querySelector(`.${itemClass}`);
+			if(elem) setTimeout(() => alertsDiv.removeChild(elem), 7000);
+		}
 	}
 
-	function showValidationErrors(messages) {
-			if(messages.name) {
-				document.querySelector(`.modal-error-name`).classList.remove('hidden');
-				document.querySelector(`.modal-error-name`).innerText = messages.name[0];
-			} 
-			
-			if(messages.logotype) {
-				document.querySelector(`.modal-error-logotype`).classList.remove('hidden');
-				document.querySelector(`.modal-error-logotype`).innerText = messages.logotype[0];
-			}
+	function resetValidationErrors(modalID) {
+		if(modalID == '#createBrand') {
+			document.querySelector(`#createBrand .modal-error-name`).classList.add('hidden');
+			document.querySelector(`#createBrand .modal-error-logotype`).classList.add('hidden');
+		}
+		if(modalID == '#createModel') {
+			document.querySelector(`#createModel .modal-error-images`).classList.add('hidden');
+			document.querySelector(`#createModel .modal-error-parent`).classList.add('hidden');
+			document.querySelector(`#createModel .modal-error-name`).classList.add('hidden');
+		}
+	}
+
+	function showValidationErrors(messages, modalID) {
+		if(messages.name) {
+			document.querySelector(`${modalID} .modal-error-name`).innerText = messages.name[0];
+			document.querySelector(`${modalID} .modal-error-name`).classList.remove('hidden');
+		}
+		if(messages.logotype) {
+			document.querySelector(`${modalID} .modal-error-logotype`).classList.remove('hidden');
+			document.querySelector(`${modalID} .modal-error-logotype`).innerText = messages.logotype[0];
+		}
+		if(messages.images) {
+			document.querySelector(`${modalID} .modal-error-images`).classList.remove('hidden');
+			document.querySelector(`${modalID} .modal-error-images`).innerText = messages.images[0];
+		}
+		if(messages.parent) {
+			document.querySelector(`${modalID} .modal-error-parent`).classList.remove('hidden');
+			document.querySelector(`${modalID} .modal-error-parent`).innerText = messages.parent[0];
+		}
+	}
+
+	function openCreateModel() {
+		modalCreateModel.classList.remove('hidden');
+		modalCreateModel.setAttribute('role', 'dialog');
+	}
+
+	function closeCreateModel() {
+		let modal_title = document.querySelector('#createModel .modal-header').getElementsByTagName('h5')[0];
+		modal_title.innerText = 'Добавление модели автомобиля';
+		modalCreateModel.classList.add('hidden');
+		modalCreateModel.removeAttribute('role');
+		myDropzone.removeAllFiles(true);
+		resetSelect('parent');
+		frm_model_create.reset();
+		resetValidationErrors('#createModel');
+		editMode = false;
 	}
 
 	function closeBrandModal() {
-			modal.classList.add('hidden');
-			modal.removeAttribute('role');
+			modalCreateBrand.classList.add('hidden');
+			modalCreateBrand.removeAttribute('role');
 			drp_area.querySelector('.image').innerHTML = '';
 			drp_area.querySelector('.image').classList.remove('bg-white');
-			resetValidationErrors();
+			resetValidationErrors('#createBrand');
 			frm_brand_create.reset();
 	}
 
-	document.addEventListener('click', () => document.querySelector(`.alerts`).innerHTML = '')
-
 	if (frm_brand_btn) {
 		frm_brand_btn.addEventListener('click', () => {
-			modal.classList.remove('hidden');
-			modal.setAttribute('role', 'dialog');
+			modalCreateBrand.classList.remove('hidden');
+			modalCreateBrand.setAttribute('role', 'dialog');
 		})
 
-		modal_close_btn.addEventListener('click', () => {
+		modal_brand_close_btn.addEventListener('click', () => {
 			closeBrandModal();
 		})
 	}
 
-	frm_submit_btn.onclick = e => {
+	if (frm_model_btn) {
+		frm_model_btn.addEventListener('click', () => {
+			openCreateModel();
+		})
+
+		modal_model_close_btn.addEventListener('click', () => {
+			closeCreateModel();
+		})
+	}
+
+	frm_brand_submit_btn.onclick = e => {
 		e.preventDefault();
 		let data = new FormData();
 		data.append('name', frm_brand_create.querySelector('.brand-name-input').value);
@@ -209,15 +285,14 @@
 		axios.post("{{route('admin.brand.store')}}", data)
 			.then(response => {
 				if(response.status == 200) {
-					let successAlert = `<div class="bg-green-100 rounded-lg py-4 px-6 mb-4 text-base text-green-700" role="alert"> <i class="zmdi zmdi-notifications align-middle text-lg mr-2"></i> <span class="align-middle">${response.data.message}</span></div>`;
-					document.querySelector(`.alerts`).innerHTML = successAlert;
-					closeBrandModal();
+					localStorage.bcSuccess = true;
+					window.location.reload(true);
 				}
 			})
 			.catch(function (error) {
 				if (error.response) {
 					if(error.response.status == 422) {
-						showValidationErrors(error.response.data.errors);
+						showValidationErrors(error.response.data.errors, '#createBrand');
 					}
 				}
 			});
@@ -272,29 +347,147 @@
 
 @push('scripts')
 <script>
-	// Dropzone.autoDiscover = false;
-	// let myDropzone = new Dropzone("div#drop-zone", {
-	// 	url: "/galleries/store",
-	// 	autoProcessQueue: false,
-	// 	addRemoveLinks: true,
-	// 	acceptedFiles: ".jpeg,.jpg,.png,.gif",
-	// 	uploadMultiple: true,
-	// 	parallelUploads: 100,
-	// 	maxFiles: 100,
-	// });
+	let filesOnServer = [];
 
-	// let form = document.querySelector('.upload-form');
+	function loadFiles(image) {
+		let serverImagesDiv = document.querySelector('.serverImages .inner');
+		let imageName = image.image.split('/').pop();
+		let imageType = 'image/' + imageName.split('.').pop();
 
-	// form.querySelector("button[type=submit]").addEventListener("click", function(e) {
-	// 	e.preventDefault();
-	// 	e.stopPropagation();
-	// 	let formData = new FormData();
-	// 	let files = myDropzone.getAcceptedFiles();
-	// 	files.forEach(file => {
-	// 		formData.append('images[]', file);
-	// 	})
-	// 	formData.append('title', form.children['username'].value);
-	// 	axios.post('{{route("galleries.store")}}', formData);
-	// });
+		fetch(`/storage/${image.image}`)
+		.then(r => r.blob())
+		.then(blobImage => {
+			let imgFile = validFileExtensions.includes(imageType) ? new File([blobImage], imageName , {type: imageType}) : null;
+
+			let fileReader = new FileReader();
+				fileReader.onload = () => {
+					console.log(image.id);
+					let fileURL = fileReader.result;
+					serverImagesDiv.insertAdjacentHTML('beforeend', `<div class='image-preview w-[130px] h-[100px] m-2 relative'><img src='${fileURL}'class='rounded w-full h-full' data-id='${image.id}' alt='${imageName}' /><x-button data-id='${image.id}' type="button" icon="close" color='red' class="delete-link block w-full h-fit py-1 text-xl text-center bg-red-200 hover:bg-red-400 hover:text-white absolute left-0 bottom-0" onclick='deleteModelImage(${image.id})' /></div>`);
+				}
+				fileReader.readAsDataURL(imgFile);
+			})
+	}
+	
+	function deleteModelImage(id) {
+		let serverImagesDiv = document.querySelector('.serverImages .inner');
+		let _url = "{{route('galleries.destroy', ['gallery' => 'imageId'])}}";
+		let urlDelete = _url.replace('imageId', id)
+		axios.delete(urlDelete)
+			.then(response => {
+					if(response.status == 200) {
+						let images = document.querySelectorAll('.image-preview').forEach(preview => {
+							let image = preview.getElementsByTagName(`img`)[0];
+							image.dataset.id == id ? serverImagesDiv.removeChild(image.parentNode) : null;
+						});
+					}
+				})
+				.catch(function (error) {
+					let images = document.querySelectorAll('.image-preview').forEach(preview => {
+						let image = preview.getElementsByTagName(`img`)[0];
+						image.dataset.id == id ? serverImagesDiv.removeChild(image.parentNode) : null;
+					});
+					console.error(error);
+				});
+	}
+
+	Dropzone.autoDiscover = false;
+	let myDropzone = new Dropzone("div#dropZone", {
+		url: "/galleries/store",
+		autoProcessQueue: false,
+		acceptedFiles: ".jpeg,.jpg,.png,.gif,.svg",
+		uploadMultiple: true,
+		parallelUploads: 100,
+		maxFiles: 25,
+		addRemoveLinks: true,
+	});
+
+	if(!editMode) {
+		frm_model_create.onsubmit = function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			let data = new FormData(this);
+			let files = myDropzone.getAcceptedFiles();
+			files.forEach(file => {
+				data.append('images[]', file);
+			})
+
+			axios.post('{{route("galleries.store")}}', data)
+				.then(response => {
+						if(response.status == 200) {
+							localStorage.mcSuccess = true;
+							window.location.reload(true);
+						}
+					})
+					.catch(function (error) {
+						if (error.response) {
+							if(error.response.status == 422) {
+								showValidationErrors(error.response.data.errors, '#createModel');
+							}
+						}
+					});
+		};	
+	}
+
+	frm_model_links.forEach(link => {
+		link.onclick = e => {
+			if(e.target.id == 'edit-link') {
+				e.preventDefault();
+				const editLink = e.target;
+				let modal_title = document.querySelector('#createModel .modal-header').getElementsByTagName('h5')[0];
+				let select = document.querySelector(`#parent`);
+				let span = document.querySelector('#createModel div.header').getElementsByTagName('span')[0];
+				let img = document.querySelector('#createModel div.header').getElementsByTagName('img')[0];
+				let option = document.querySelector(`#createModel .option[data-value="${editLink.dataset.parentId}"]`);
+				let parentData = JSON.parse(editLink.dataset.parent);
+				let modelImages = JSON.parse(editLink.dataset.images);
+				modal_title.innerText = `Редактирование модели автомобиля №${editLink.dataset.id}`;
+				select.value = parentData.id;
+				span.innerText = parentData.name;
+				img.src = '/storage/' + parentData.logotype;
+				frm_model_create.querySelector('#name').value = editLink.dataset.name;
+				editMode = true;
+
+				if(editMode) modelImages.forEach(image => loadFiles(image));
+
+				openCreateModel();
+
+				if(editMode) {
+					frm_model_create.onsubmit = function(e) {
+							e.preventDefault();
+							let data = new FormData(this);
+
+							let files = myDropzone.getAcceptedFiles();
+							
+							if(files.length > 0) {
+								files.forEach(file => {
+									data.append('images[]', file);
+								})
+							} else {
+								data.append('images[]', []);
+							}
+							
+							let urlDirty = "{{route('admin.galleries.update', ['gallery' => 'modelId'])}}";
+							let urlUpdate = urlDirty.replace('modelId', editLink.dataset.id);
+
+							axios.post(urlUpdate, data)
+								.then(response => {
+										if(response.status == 200) {
+											localStorage.muSuccess = true;
+											window.location.reload(true);
+										}
+									})
+									.catch(function (error) {
+										if (error.response) {
+											if(error.response.status == 422) {
+												showValidationErrors(error.response.data.errors, '#createModel');
+											}
+										}
+									});
+						};
+					}
+				}
+		} 
+	})
 </script>
 @endpush

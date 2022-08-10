@@ -162,6 +162,11 @@ blockquote {
     @apply border-r-2 border-gray-300;
 }
 
+.gallery-grid .gallery-item:nth-child(even) .models {
+    @apply rounded-tr-md rounded-br-md;
+    margin-left: -5px;
+}
+
 .gallery-grid .gallery-item:nth-child(even),
 .gallery-grid .gallery-item:nth-child(even) + .grid-sizer {
     width: 60%;
@@ -172,6 +177,185 @@ blockquote {
     max-height: 100%;
     margin-top: 0.5rem;
     transition: margin 200ms ease-in;
+}
+
+/* Custom select */
+.select:focus {
+    @apply ring-2 ring-green-600;
+}
+
+html body form div.select[data-multiple] div.header {
+    display: none;
+}
+
+html body form div.select div.header {
+    content: "▼";
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0;
+    position: relative;
+    width: 100%;
+    height: 44px;
+}
+
+html body form div.select div.header::after {
+    content: "▼";
+    align-self: stretch;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    padding: 0 0.5em;
+}
+
+html body form div.select div.header:hover:after {
+    cursor: pointer;
+}
+
+html body form div.select[data-open] div.header::after {
+    content: "▲";
+}
+
+.select .header select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+    border-width: 0;
+    width: 100%;
+    flex: 1;
+    display: none;
+}
+
+.select .header select optgroup {
+    display: none;
+}
+
+.select select div.option {
+    display: none;
+}
+
+html body form div.select {
+    user-select: none;
+    box-sizing: border-box;
+    position: relative;
+    @apply rounded;
+    width: auto;
+    display: inline-block;
+    width: 100%;
+}
+
+html body form div.select:hover {
+    cursor: pointer;
+}
+
+html body form div.select[data-open] datalist {
+    display: initial;
+    width: 100%;
+    @apply shadow-md;
+}
+
+html body form div.select datalist {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: absolute;
+    @apply border border-gray-100 rounded-md;
+    left: 0;
+    top: 44px;
+    display: none;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 2;
+}
+
+html body form div.select datalist div.option {
+    background-color: white;
+    margin-bottom: 1px;
+    cursor: pointer;
+    padding: 0.5em;
+    border-width: 0;
+}
+
+html body form div.select datalist div.option:first-child {
+    @apply rounded-tl rounded-tr;
+}
+
+html body form div.select datalist div.option:last-child {
+    @apply rounded-bl rounded-br;
+}
+
+html body form div.select datalist div.option:hover {
+    @apply bg-green-500 transition-colors;
+    color: white;
+}
+
+html body form div.select datalist div.option:focus {
+    @apply bg-green-500 transition-colors;
+    color: white;
+}
+
+html body form div.select datalist div.option:checked {
+    @apply bg-green-500 transition-colors;
+    color: white;
+}
+
+html body form div.select div.optgroup div.option[data-disabled] {
+    color: gray;
+}
+
+html body form div.select div.optgroup div.option[data-checked] {
+    @apply bg-green-500;
+    color: white;
+}
+
+html body form div.select div.optgroup div.label {
+    font-weight: bold;
+}
+
+html body form div.select div.optgroup div.option div.label {
+    font-weight: normal;
+    padding: 0.25em;
+}
+
+html body form div.select div.header {
+    flex: 1;
+    display: flex;
+    width: auto;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: inherit;
+    border-color: inherit;
+    border-radius: inherit;
+}
+
+html body form div.select div.header span {
+    flex: 1;
+    padding: 0.5em;
+}
+/* end custom select */
+
+.dropzone .dz-preview .dz-image {
+    height: auto;
+}
+
+#createModel .image-preview .delete-link {
+    opacity: 0;
+    visibility: hidden;
+    border-radius: 0;
+    @apply transition-opacity rounded-br rounded-bl;
+}
+
+#createModel .image-preview:hover .delete-link {
+    opacity: 1;
+    visibility: visible;
 }
 
 @media screen and (max-width: 1000px) {
@@ -212,5 +396,15 @@ blockquote {
     .gallery-grid .gallery-item,
     .gallery-grid .gallery-item:nth-child(even) {
         flex-direction: column;
+    }
+
+    .gallery-grid .gallery-item:nth-child(even) .models {
+        margin-left: inherit;
+        margin-top: -2px;
+        @apply rounded-t-none;
+    }
+
+    .gallery-grid .gallery-item .models {
+        margin-top: -2px;
     }
 }

@@ -17,7 +17,7 @@ class YandexMetrikaController
         $this->token = getenv('TOKEN');
         $this->counterId = getenv('COUNTER_ID');
         $this->client = new Client($this->token, $this->counterId);
-        $this->metrika = isset($this->client) ? new YaMetrika($this->client) : null;
+        $this->metrika = new YaMetrika($this->client);
     }
 
     public function getVisitors($period)

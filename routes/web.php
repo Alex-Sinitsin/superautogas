@@ -31,6 +31,7 @@ Route::prefix('admin')->group(function () {
         //Galleries
         Route::resource('galleries', \App\Http\Controllers\Admin\GalleryController::class);
         Route::post('/galleries/brand/store', [\App\Http\Controllers\Admin\GalleryController::class, 'brandStore'])->name('admin.brand.store');
+        Route::post('/galleries/update/{gallery}', [\App\Http\Controllers\Admin\GalleryController::class, 'update'])->name('admin.galleries.update');
 
         Route::get('/logout', [\App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout.perform');
     });

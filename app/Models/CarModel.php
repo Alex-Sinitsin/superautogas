@@ -9,16 +9,21 @@ class CarModel extends Model
 {
     use HasFactory;
 
+    protected $with = ['images'];
+
     protected $fillable = [
+        'id',
         'name',
         'car_brand_id'
     ];
 
-    public function images() {
+    public function images()
+    {
         return $this->hasMany(Gallery::class);
     }
 
-    public function brand() {
+    public function brand()
+    {
         return $this->belongsTo(CarBrand::class);
     }
 }

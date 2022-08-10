@@ -25,7 +25,7 @@ class BrandRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'logotype' => ['required']
+            'logotype' => ['required', 'image', 'mimes:png,jpg,gif,svg']
         ];
     }
 }
