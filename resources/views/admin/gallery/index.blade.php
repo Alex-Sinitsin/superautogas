@@ -38,8 +38,13 @@
 						items-center shadow-lg bg-slate-100 relative">
 						<img src="/storage/{{$brand->logotype}}" class="h-auto w-full xl:w-2/3 xl:mx-auto" alt="Логотип бренда">
 						<x-button type="button" color="amber" icon="edit"
-							class="edit-link absolute h-fit top-2 right-2 bg-amber-300 hover:bg-amber-400" data-id="{{$brand->id}}"
+							class="edit-link absolute h-fit top-2 right-16 bg-amber-300 hover:bg-amber-400" data-id="{{$brand->id}}"
 							data-name="{{$brand->name}}" data-active="{{$brand->is_active}}" data-logotype="{{$brand->logotype}}" />
+						<a href="#">
+							<x-button type="button" color="red" icon="delete"
+								class="delete-link absolute h-fit top-2 right-3 px-[1.1rem] bg-red-300 hover:bg-red-400"
+								data-id="{{$brand->id}}" />
+						</a>
 						@if($brand->is_active)
 						<span
 							class="absolute left-2 bottom-2 text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-green-600 text-white rounded">Опубликован</span>
@@ -58,7 +63,7 @@
 				<ul class="flex w-full flex-wrap mr-10 px-2">
 					@foreach ($brand->models as $model)
 					<li class="flex-1 text-center relative">
-						<a href="{{route('galleries.show', ['gallery' => $model->id])}}"
+						<a href="{{route('galleries.show', ['gallery' => $model->slug])}}"
 							class="model-link m-1 block bg-neutral-600 hover:bg-neutral-700 transition-colors text-white font-semibold px-5 py-2.5 tracking-wide rounded cursor-pointer">
 							<span class="">{{$model->name}}</span>
 							<div class="actions max-h-0 overflow-hidden flex items-center justify-center">

@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Filesystem\Filesystem;
-use Spatie\Sluggable\SlugOptions;
 use Illuminate\Validation\Rule;
 
 class GalleryController extends Controller
@@ -144,14 +143,14 @@ class GalleryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $model = CarModel::with('images')->where('id', '=', $id)->get();
-
-        dd($model);
+        $model = CarModel::with(['images'])->where('slug', '=', $slug)->first();
+        $brand = CarBrand::findOrFail($model->car_brand_id);
+        return view('admin.gallery.show', compact('model', 'brand'));
     }
 
     /**

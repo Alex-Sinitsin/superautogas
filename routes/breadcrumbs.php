@@ -46,3 +46,10 @@ Breadcrumbs::for('admin.galleries', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
     $trail->push('Наши работы', route('galleries.index'));
 });
+
+Breadcrumbs::for('admin.galleries.show', function (BreadcrumbTrail $trail, $model, $brand) {
+    $trail->parent('admin');
+    $trail->push('Наши работы', route('galleries.index'));
+    $trail->push($brand->name, route('galleries.index'));
+    $trail->push($model->name, route('galleries.show', $model->slug));
+});
