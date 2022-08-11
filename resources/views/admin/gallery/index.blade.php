@@ -201,7 +201,7 @@
 	async function loadSingleFile(url = '') {
 		file = await fetch(url)
 		.then(r => r.blob())
-		.then(blobImage => validFileExtensions.includes(blobImage.type) ? new File([blobImage], `image_` + Math.random() * 100 + '.' + blobImage.type.split('/').pop() , { type: blobImage.type}) : null);
+		.then(blobImage => validFileExtensions.includes(blobImage.type) ? new File([blobImage], `image_` + Math.random() * 100 + '.' + blobImage.type.split('/').pop().toLowerCase() , { type: blobImage.type}) : null);
 		showImage();
 	}
 
