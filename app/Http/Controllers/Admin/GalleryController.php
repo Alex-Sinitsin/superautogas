@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Illuminate\Filesystem\Filesystem;
+use Spatie\Sluggable\SlugOptions;
+use Illuminate\Validation\Rule;
 
 class GalleryController extends Controller
 {
@@ -45,7 +47,7 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string', Rule::unique('car_models', 'name')],
             'parent' => ['required'],
             'images' => ['required', 'array'],
         ]);
@@ -63,7 +65,7 @@ class GalleryController extends Controller
                     $constraint->aspectRatio();
                 })->stream();
                 $hash = md5(Carbon::now() . $file->getClientOriginalName() . rand(0, 9999999));
-                $path = 'models/' . $brand->name . '/' . $validated['name'] . '/' . $hash . '.' . $file->getClientOriginalExtension();
+                $path = 'models/' . strtoupper($brand->slug) . '/' . strtoupper($model->slug) . '/' . $hash . '.' . $file->getClientOriginalExtension();
 
                 Storage::disk('public')->put($path, $compressed_file, 'public');
                 $model->images()->create([
@@ -105,6 +107,41 @@ class GalleryController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function brandUpdate(BrandRequest $request, $id)
+    {
+        $data = $request->validated();
+
+        $brand = CarBrand::findOrFail($id);
+
+        if (Storage::disk('public')->exists($brand->logotype)) {
+            Storage::disk('public')->delete($brand->logotype);
+        }
+
+        if ($request->hasFile('logotype')) {
+            $file = $request->file('logotype');
+            $compressed_file = Image::make($file->getRealPath());
+            $compressed_file->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->stream();
+            $hash = md5(Carbon::now() . $file->getClientOriginalName() . rand(0, 9999999));
+            $path = 'brands/' . $hash . '.' . $file->getClientOriginalExtension();
+
+            Storage::disk('public')->put($path, $compressed_file, 'public');
+
+            $brand->name = $data['name'];
+            $brand->logotype = $path;
+            if ($request->has('is_active')) $brand->is_active = $data['is_active'];
+            $brand->save();
+        }
+        return response()->json(['status' => 200, 'message' => 'Бренд автомобиля успешно добавлен!']);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -138,7 +175,7 @@ class GalleryController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string', Rule::unique('car_models', 'name')->ignore($id)],
             'parent' => ['required'],
             'images' => ['nullable', 'array'],
         ]);
@@ -160,7 +197,7 @@ class GalleryController extends Controller
                         $constraint->aspectRatio();
                     })->stream();
                     $hash = md5(Carbon::now() . $file->getClientOriginalName() . rand(0, 9999999));
-                    $path = 'models/' . $brand->name . '/' . $validated['name'] . '/' . $hash . '.' . $file->getClientOriginalExtension();
+                    $path = 'models/' . strtoupper($brand->slug) . '/' . strtoupper($model->slug) . '/' . $hash . '.' . $file->getClientOriginalExtension();
 
                     Storage::disk('public')->put($path, $compressed_file, 'public');
                     $model->images()->create([
@@ -188,21 +225,30 @@ class GalleryController extends Controller
         if (Storage::disk('public')->exists($image->image)) {
             Storage::disk('public')->delete($image->image);
 
-            $FileSystem = new FileSystem();
+            $directoryModel = public_path('storage\\models\\' . strtoupper($brand->slug) . '\\' . strtoupper($model->slug));
+            $directoryBrand = public_path('storage\\models\\' . strtoupper($brand->slug));
 
-            $directory = public_path('storage\\models\\' . $brand->name . '\\' . $model->name);
-
-            if ($FileSystem->exists($directory)) {
-                $files = $FileSystem->files($directory);
-                if (empty($files)) {
-                    $FileSystem->deleteDirectory($directory);
-                }
-            } else abort(404, 'Directory Not Found!');
-
-            $image->delete();
+            $this->destroyDirectory($directoryModel);
+            $this->destroyDirectory($directoryBrand);
         } else {
             abort(404, 'File Not Found!');
         }
+
+        $image->delete();
         return response()->json()->setStatusCode(200);
+    }
+
+    protected function destroyDirectory($directory)
+    {
+        $FileSystem = new FileSystem();
+
+        if ($FileSystem->exists($directory)) {
+            $files = $FileSystem->files($directory);
+            $directories = $FileSystem->directories($directory);
+
+            if (empty($files) && empty($directories)) {
+                $FileSystem->deleteDirectory($directory);
+            }
+        } else abort(404, 'Directory' . $directory . 'Not Found!');
     }
 }

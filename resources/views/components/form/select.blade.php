@@ -175,22 +175,33 @@
 				header.appendChild(span, img);
 			} 
 		});
-		select.value = options[0].attributes.value.value
-		span.innerText = options[0].attributes.label.value;
-		img.src = options[0].attributes.image.value;
-		img.classList.add('ml-2', 'mr-1')
-		img.width = 35;
-		img.height = 35;
-		header.appendChild(span, img);
+		if(options.length > 0) {
+			select.value = options[0].attributes.value.value
+			span.innerText = options[0].attributes.label.value;
+			img.src = options[0].attributes.image.value;
+			img.classList.add('ml-2', 'mr-1')
+			img.width = 35;
+			img.height = 35;
+			header.appendChild(span, img);
+		} else {
+			select.value = '';
+			span.innerText = "{{$placeholder}}";
+			header.appendChild(span);
+		}
+		
 	}
 
 	function resetSelect(SelectId = 'select') {
-		document.querySelector(`#${SelectId}`).value = document.getElementById(SelectId).getElementsByTagName('option')[0].attributes.value.value
-		document.querySelector('#createModel div.header').getElementsByTagName('span')[0].innerText = document.getElementById(SelectId).getElementsByTagName('option')[0].attributes.label.value;
-		document.querySelector('#createModel div.header').getElementsByTagName('img')[0].src = document.getElementById(SelectId).getElementsByTagName('option')[0].attributes.image.value;
-		document.querySelector('#createModel div.header').getElementsByTagName('img')[0].classList.add('ml-2', 'mr-1')
-		document.querySelector('#createModel div.header').getElementsByTagName('img')[0].width = 35;
-		document.querySelector('#createModel div.header').getElementsByTagName('img')[0].height = 35;
+		const options = document.getElementById(SelectId).getElementsByTagName('option');
+		if(options.length > 0) {
+			document.querySelector(`#${SelectId}`).value = options[0].attributes.value.value
+			document.querySelector('#createModel div.header').getElementsByTagName('span')[0].innerText = options[0].attributes.label.value;
+			document.querySelector('#createModel div.header').getElementsByTagName('img')[0].src = options[0].attributes.image.value;
+			document.querySelector('#createModel div.header').getElementsByTagName('img')[0].classList.add('ml-2', 'mr-1')
+			document.querySelector('#createModel div.header').getElementsByTagName('img')[0].width = 35;
+			document.querySelector('#createModel div.header').getElementsByTagName('img')[0].height = 35;
+		}
+		
 	}
 </script>
 @endpushonce

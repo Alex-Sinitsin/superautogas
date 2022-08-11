@@ -11,7 +11,7 @@
 </label>
 @endif
 <div id="{{ $id }}" {{$attributes->class(["dropzone w-full"])}}>
-  <div class="dz-message text-sm text-gray-600" data-dz-message>
+  <div class="dz-message text-sm text-gray-500" data-dz-message>
     <i class="zmdi zmdi-cloud text-5xl mb-2"></i>
     <span class="block">Перетащите файлы в эту область</span>
     <span class="block">или нажмите, чтобы выбрать файлы</span>
