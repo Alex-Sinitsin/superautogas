@@ -173,7 +173,8 @@ form .submit-btn:disabled:hover {
 }
 
 .gallery-grid .gallery-item:nth-child(even),
-.gallery-grid .gallery-item:nth-child(even) + .grid-sizer {
+.gallery-grid .gallery-item:nth-child(even) + .grid-sizer,
+.gallery-grid .gallery-item:last-child {
     width: 60%;
     flex-direction: row;
 }
@@ -272,6 +273,8 @@ html body form div.select:hover {
 html body form div.select[data-open] datalist {
     display: initial;
     width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
     @apply shadow-md;
 }
 
@@ -371,6 +374,95 @@ html body form div.select div.header span {
     visibility: visible;
 }
 
+/* Custom confirmation window */
+.confirm {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.confirm.hide {
+    animation: fadeOut;
+    animation-duration: 400ms;
+}
+
+.confirm-window {
+    position: absolute;
+    width: 400px;
+    max-width: 98%;
+    top: 50%;
+    left: 50%;
+    background-color: #fff;
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: 4px;
+    letter-spacing: 0.03rem;
+    box-shadow: 0 25px 50px 10px rgba(0, 0, 0, 0.25);
+}
+
+.confirm-window__title {
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.confirm-window__text {
+    flex: 1;
+}
+
+.confirm-window__close {
+    font-size: 28px;
+    transition: color 300ms ease-in-out;
+}
+
+.confirm-window__close:hover {
+    color: rgb(205, 0, 0);
+}
+
+.confirm-window__body {
+    padding: 20px 15px;
+}
+
+.confirm-window__footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.confirm-window__ok,
+.confirm-window__cancel {
+    padding: 0.25rem 1rem;
+    border-radius: 3px;
+    font-weight: bold;
+    transition: background-color 300ms ease-in-out;
+}
+
+.confirm-window__ok {
+    margin-right: 0.5rem;
+    color: #fff;
+    background-color: rgb(36, 187, 81);
+}
+
+.confirm-window__ok:hover {
+    background-color: rgb(32, 160, 70);
+}
+
+.confirm-window__cancel {
+    color: #fff;
+    background-color: rgb(209, 37, 37);
+}
+
+.confirm-window__cancel:hover {
+    background-color: rgb(162, 29, 29);
+}
+
+.pswp-gallery .grid-item:hover {
+    @apply ring-4 rounded ring-green-600 transition-all;
+}
+
 @media screen and (max-width: 1000px) {
     .gallery-grid .grid-sizer,
     .gallery-grid .gallery-item {
@@ -407,7 +499,7 @@ html body form div.select div.header span {
 
 @media screen and (max-width: 426px) {
     .content-wrapper {
-        top: 128px !important;
+        /* top: 128px !important; */
     }
 
     .header .logotype {

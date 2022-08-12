@@ -28,11 +28,11 @@
 		@endif
 	</div>
 
-	<div class="page-body">
+	<div class="page-body relative">
 		<div class="gallery-grid 2xl:container 2xl:mx-auto">
 			<div class="grid-sizer"></div>
 			@foreach ($brands as $brand)
-			<x-gallery.item>
+			<x-gallery.item data-id="{{$brand->id}}">
 				<x-slot:logotype>
 					<div class="brand min-w-[200px] w-full min-h-[200px] p-3 rounded-md flex justify-center
 						items-center shadow-lg bg-slate-100 relative">
@@ -43,7 +43,7 @@
 						<a href="#">
 							<x-button type="button" color="red" icon="delete"
 								class="delete-link absolute h-fit top-2 right-3 px-[1.1rem] bg-red-300 hover:bg-red-400"
-								data-id="{{$brand->id}}" />
+								data-id="{{$brand->id}}" data-name="{{$brand->name}}" />
 						</a>
 						@if($brand->is_active)
 						<span
@@ -60,11 +60,12 @@
 					<p class="font-bold">Нет моделей</p>
 				</div>
 				@else
-				<ul class="flex w-full flex-wrap mr-10 px-2">
+				<ul class="models-list flex w-full flex-wrap mr-10 px-2">
 					@foreach ($brand->models as $model)
 					<li class="flex-1 text-center relative">
 						<a href="{{route('galleries.show', ['gallery' => $model->slug])}}"
-							class="model-link m-1 block bg-neutral-600 hover:bg-neutral-700 transition-colors text-white font-semibold px-5 py-2.5 tracking-wide rounded cursor-pointer">
+							class="model-link m-1 block bg-neutral-600 hover:bg-neutral-700 transition-colors text-white font-semibold px-5 py-2.5 tracking-wide rounded cursor-pointer"
+							data-id="{{$model->id}}">
 							<span class="">{{$model->name}}</span>
 							<div class="actions max-h-0 overflow-hidden flex items-center justify-center">
 								<span class="w-10 cursor-pointer text-amber-900 bg-amber-300 hover:bg-amber-400 py-1 rounded"
@@ -72,8 +73,10 @@
 									data-images="{{$model->images}}" id="edit-link">
 									<i class="zmdi zmdi-edit pointer-events-none"></i>
 								</span>
-								<span class="w-10 text-red-900 cursor-pointer bg-red-300 hover:bg-red-400 py-1 ml-1 rounded"><i
-										class="zmdi zmdi-delete pointer-events-none"></i></span>
+								<span id="delete-link" data-name="{{$brand->name . ' ' . $model->name}}" data-id="{{$model->id}}"
+									class="w-10 text-red-900 cursor-pointer bg-red-300 hover:bg-red-400 py-1 ml-1 rounded">
+									<i class="zmdi zmdi-delete pointer-events-none"></i>
+								</span>
 							</div>
 						</a>
 					</li>
@@ -83,80 +86,84 @@
 			</x-gallery.item>
 			@endforeach
 		</div>
+		<div class="pagination-links my-5">
+			{{ $brands->links() }}
+		</div>
 	</div>
+</div>
 
-	<div class="modals">
-		<!-- Modal -->
-		<x-modal id="createBrand" title="Добавление бренда автомобиля">
-			<x-form method="POST" action="{{ route('admin.brand.store') }}" class="create-brand-form" multipart>
-				<div class="form-inner flex flex-wrap">
-					<div
-						class="logo-drop-area flex flex-col relative justify-center items-center mx-auto border border-neutral-400 rounded min-w-[200px] min-h-[200px] max-h-[250px] w-full">
-						<div class="image absolute inset-0 pointer-events-none"></div>
-						<div class="content flex flex-col py-3 justify-center items-center text-center select-none">
-							<i class="zmdi zmdi-cloud text-5xl mb-2"></i>
-							<p class="drop-area__header px-6 text-sm">Перетащите файл в эту область</p>
-							<span class="drop-area__header px-6 text-sm">или </span>
-							<span class="browse block font-bold text-blue-500 hover:text-blue-700 cursor-pointer">Выберите файл</span>
-							<input type="file" name="logotype" class="drop-area__input" hidden>
-						</div>
-					</div>
-					<span class="modal-error-logotype my-2 text-red-600 hidden"></span>
-					<div class="w-full">
-						<x-form.input type="text" name="name" label="Заголовок" placeholder="{{ __('Введите название') }}"
-							class="brand-name-input min-w-[300px] mb-2" required />
-						<span class="modal-error-name my-2 text-red-600 hidden"></span>
+<div class="modals">
+	<!-- Modal -->
+	<x-modal id="createBrand" title="Добавление бренда автомобиля">
+		<x-form method="POST" action="{{ route('admin.brands.store') }}" class="create-brand-form" multipart>
+			<div class="form-inner flex flex-wrap">
+				<div
+					class="logo-drop-area flex flex-col relative justify-center items-center mx-auto border border-neutral-400 rounded min-w-[200px] min-h-[200px] max-h-[250px] w-full">
+					<div class="image absolute inset-0 pointer-events-none"></div>
+					<div class="content flex flex-col py-3 justify-center items-center text-center select-none">
+						<i class="zmdi zmdi-cloud text-5xl mb-2"></i>
+						<p class="drop-area__header px-6 text-sm">Перетащите файл в эту область</p>
+						<span class="drop-area__header px-6 text-sm">или </span>
+						<span class="browse block font-bold text-blue-500 hover:text-blue-700 cursor-pointer">Выберите файл</span>
+						<input type="file" name="logotype" class="drop-area__input" hidden>
 					</div>
 				</div>
-				<x-form.checkbox name="is_active" label="Опубликовать" class="is_active_checkbox" onchange="changeState()"
-					checked />
-				<div class="flex justify-end w-full mt-6">
+				<span class="modal-error-logotype my-2 text-red-600 hidden"></span>
+				<div class="w-full">
+					<x-form.input type="text" name="name" label="Заголовок" placeholder="{{ __('Введите название') }}"
+						class="brand-name-input min-w-[300px] mb-2" required />
+					<span class="modal-error-name my-2 text-red-600 hidden"></span>
+				</div>
+			</div>
+			<x-form.checkbox name="is_active" label="Опубликовать" class="is_active_checkbox" onchange="changeState()"
+				checked />
+			<div class="flex justify-end w-full mt-6">
+				<x-button type="submit" text="Сохранить" icon="card-sd"
+					class="submit-btn bg-violet-300 hover:bg-violet-600 hover:text-white py-2" />
+			</div>
+		</x-form>
+	</x-modal>
+
+	<!-- Modal -->
+	<x-modal id="createModel" title="Добавление модели автомобиля">
+		<x-form name="createModelForm" method="POST" action="{{ route('galleries.store') }}" class="create-model-form"
+			multipart>
+			<div class="form-inner flex flex-wrap">
+				<div class="form-item w-full mb-2">
+					<x-form.select name="parent" placeholder="Выберите родительскую группу" label="Родительская группа"
+						class="mb-2" required>
+						@foreach ($brandsForSelect as $brand)
+						<option class="option" value="{{$brand->id}}" label="{{$brand->name}}"
+							image='/storage/{{$brand->logotype}}'>
+							{{$brand->name}}
+						</option>
+						@endforeach
+					</x-form.select>
+					<span class="modal-error-parent my-2 text-red-600 hidden"></span>
+				</div>
+				<div class="form-item w-full">
+					<x-form.input type="text" name="name" label="Название" placeholder="{{ __('Введите название') }}"
+						class="brand-name-input min-w-[300px] mb-2" required />
+					<span class="modal-error-name my-2 text-red-600 hidden"></span>
+				</div>
+
+				<div class="serverImages w-full">
+					<div class="title">
+						<p class="block text-gray-500 font-bold my-3">Изображения на сервере</p>
+					</div>
+					<div class="inner grid grid-cols-4 gap-1"></div>
+				</div>
+
+				<x-dropzone label="Изображения для галереи" name="images" id="dropZone" required />
+
+				<div class="flex justify-end w-full mt-3">
 					<x-button type="submit" text="Сохранить" icon="card-sd"
 						class="submit-btn bg-violet-300 hover:bg-violet-600 hover:text-white py-2" />
 				</div>
-			</x-form>
-		</x-modal>
-
-		<!-- Modal -->
-		<x-modal id="createModel" title="Добавление модели автомобиля">
-			<x-form name="createModelForm" method="POST" action="{{ route('galleries.store') }}" class="create-model-form"
-				multipart>
-				<div class="form-inner flex flex-wrap">
-					<div class="form-item w-full mb-2">
-						<x-form.select name="parent" placeholder="Выберите родительскую группу" label="Родительская группа"
-							class="mb-2" required>
-							@foreach ($brands as $brand)
-							<option class="option" value="{{$brand->id}}" label="{{$brand->name}}"
-								image='/storage/{{$brand->logotype}}'>
-								{{$brand->name}}
-							</option>
-							@endforeach
-						</x-form.select>
-						<span class="modal-error-parent my-2 text-red-600 hidden"></span>
-					</div>
-					<div class="form-item w-full">
-						<x-form.input type="text" name="name" label="Название" placeholder="{{ __('Введите название') }}"
-							class="brand-name-input min-w-[300px] mb-2" required />
-						<span class="modal-error-name my-2 text-red-600 hidden"></span>
-					</div>
-
-					<div class="serverImages w-full">
-						<div class="title">
-							<p class="block text-gray-500 font-bold my-3">Изображения на сервере</p>
-						</div>
-						<div class="inner grid grid-cols-4 gap-1"></div>
-					</div>
-
-					<x-dropzone label="Изображения для галереи" name="images" id="dropZone" required />
-
-					<div class="flex justify-end w-full mt-3">
-						<x-button type="submit" text="Сохранить" icon="card-sd"
-							class="submit-btn bg-violet-300 hover:bg-violet-600 hover:text-white py-2" />
-					</div>
-				</div>
-			</x-form>
-		</x-modal>
-	</div>
+			</div>
+		</x-form>
+	</x-modal>
+</div>
 </div>
 @endsection
 
@@ -174,6 +181,7 @@
 	let file;
 	let validFileExtensions = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/svg+xml', 'image/svg'];
 	let editModelMode = false;
+	let deleteImageMode = false;
 	let editBrandMode = false;
 	// Create Brand Modal
 	let frm_brand_btn = document.querySelector('.create-brand-btn');
@@ -184,6 +192,7 @@
 	let frm_brand_create = document.querySelector(".create-brand-form");
 	let frm_brand_submit_btn = frm_brand_create.querySelector('.submit-btn');
 	let frm_brand_edit_links = document.querySelectorAll('.gallery-item .brand .edit-link'); 
+	let frm_brand_delete_links = document.querySelectorAll('.gallery-item .brand .delete-link'); 
 	let modal_brand_close_btn = modalCreateBrand.querySelector('.close-btn');
 	// Create Model Modal
 	let frm_model_btn = document.querySelector('.create-model-btn');
@@ -201,16 +210,21 @@
 	async function loadSingleFile(url = '') {
 		file = await fetch(url)
 		.then(r => r.blob())
-		.then(blobImage => validFileExtensions.includes(blobImage.type) ? new File([blobImage], `image_` + Math.random() * 100 + '.' + blobImage.type.split('/').pop().toLowerCase() , { type: blobImage.type}) : null);
+		.then(blobImage => validFileExtensions.includes(blobImage.type) ? new File([blobImage], `image_` + Math.random() * 100 + '.' + blobImage.type.split('/').pop().toLowerCase() , { type: blobImage.type.toLowerCase()}) : null);
 		showImage();
 	}
 
 	window.addEventListener("load", function() {
 		let alertsDiv = document.querySelector('.alerts');
-		showAlert('Модель автомобиля успешно добавлена!', 'mcSuccess', 'mcSuccess');
+		editModelMode = false;
+		deleteImageMode = false;
+		editBrandMode = false;
 		showAlert('Бренд автомобиля успешно добавлен!', 'bcSuccess', 'bcSuccess');
 		showAlert('Бренд автомобиля успешно обновлен!', 'buSuccess', 'buSuccess');
+		showAlert('Бренд автомобиля успешно удален!', 'bdSuccess', 'bdSuccess');
+		showAlert('Модель автомобиля успешно добавлена!', 'mcSuccess', 'mcSuccess');
 		showAlert('Модель автомобиля успешно обновлена!', 'muSuccess', 'muSuccess');
+		showAlert('Модель автомобиля успешно удалена!', 'mdSuccess', 'mdSuccess');
 	});
 
 	function showAlert(message, itemClass, storageItemName) {
@@ -267,14 +281,12 @@
 		modal_title.innerText = 'Добавление модели автомобиля';
 		modalCreateModel.classList.add('hidden');
 		modalCreateModel.removeAttribute('role');
-		myDropzone.removeAllFiles(true);
+		if(myDropzone) myDropzone.removeAllFiles();
 		resetSelect('parent');
-		frm_model_create.reset();
 		resetValidationErrors('#createModel');
-		if(editModelMode) location.reload(true);
-		editModelMode = false;
 		serverImagesDiv.innerHTML = '';
-		
+		frm_model_create.reset();
+		if(deleteImageMode) window.location.reload(true);
 	}
 
 	function closeBrandModal() {
@@ -324,7 +336,7 @@
 
 			resetValidationErrors('#createBrand');
 		
-			axios.post("{{route('admin.brand.store')}}", data)
+			axios.post("{{route('admin.brands.store')}}", data)
 			.then(response => {
 				if(response.status == 200) {
 					localStorage.bcSuccess = true;
@@ -395,8 +407,8 @@
 <script>
 	function loadFiles(image) {
 		let serverImagesDiv = document.querySelector('.serverImages .inner');
-		let imageName = image.image.split('/').pop();
-		let imageType = 'image/' + imageName.split('.').pop();
+		let imageName = image.image.split('/').pop().toLowerCase();
+		let imageType = 'image/' + imageName.split('.').pop().toLowerCase();
 
 		fetch(`/storage/${image.image}`)
 		.then(r => r.blob())
@@ -415,7 +427,9 @@
 	function deleteModelImage(id) {
 		let serverImagesDiv = document.querySelector('.serverImages .inner');
 		let _url = "{{route('galleries.destroy', ['gallery' => 'imageId'])}}";
-		let urlDelete = _url.replace('imageId', id)
+		let urlDelete = _url.replace('imageId', id);
+		deleteImageMode = true;
+
 		axios.delete(urlDelete)
 			.then(response => {
 				if(response.status == 200) {
@@ -451,7 +465,7 @@
 	});
 
 	if(!editModelMode) {
-		frm_model_create.onsubmit = function(e) {
+		frm_model_create.addEventListener('submit', e => {
 			e.preventDefault();
 			let data = new FormData(frm_model_create);
 			let files = myDropzone.getAcceptedFiles();
@@ -465,8 +479,8 @@
 				.then(response => {
 					if(response.status == 200) {
 						localStorage.mcSuccess = true;
-						closeCreateModel();
 						frm_model_create.querySelector('.submit-btn').removeAttribute('disabled');
+						closeCreateModel();
 						window.location.reload(true);
 					}
 				})
@@ -478,7 +492,7 @@
 						}
 					}
 				});
-		};	
+		});	
 	}
 
 	frm_model_links.forEach(link => {
@@ -506,48 +520,76 @@
 
 				if(editModelMode) {
 					frm_model_create.addEventListener('submit', e => {
-							e.preventDefault();
-							let data = new FormData(frm_model_create);
+						e.preventDefault();
+						let data = new FormData(frm_model_create);
 
-							let files = myDropzone.getAcceptedFiles();
-							
-							if(files.length > 0) {
-								files.forEach(file => {
-									data.append('images[]', file);
-								})
-							} else {
-								data.append('images[]', []);
-							}
+						let files = myDropzone.getAcceptedFiles();
+						
+						if(files.length > 0) {
+							files.forEach(file => {
+								data.append('images[]', file);
+							})
+						} else {
+							data.append('images[]', []);
+						}
 
-							resetValidationErrors('#createModel');
+						resetValidationErrors('#createModel');
 
-							frm_model_create.querySelector('.submit-btn').setAttribute('disabled', '');
-							
-							let urlDirty = "{{route('admin.galleries.update', ['gallery' => 'modelId'])}}";
-							let urlUpdate = urlDirty.replace('modelId', editLink.dataset.id);
+						frm_model_create.querySelector('.submit-btn').setAttribute('disabled', '');
+						
+						let _url = "{{route('admin.models.update', ['gallery' => 'modelId'])}}";
+						let urlUpdate = _url.replace('modelId', editLink.dataset.id);
 
-							axios.post(urlUpdate, data)
-								.then(response => {
-									if(response.status == 200) {
-										localStorage.muSuccess = true;
-										closeCreateModel();
-										frm_model_create.querySelector('.submit-btn').removeAttribute('disabled');
-										window.location.reload(true);
+						axios.post(urlUpdate, data)
+							.then(response => {
+								if(response.status == 200) {
+									localStorage.muSuccess = true;
+									closeCreateModel();
+									frm_model_create.querySelector('.submit-btn').removeAttribute('disabled');
+									window.location.reload(true);
+								}
+							})
+							.catch(function (error) {
+								if (error.response) {
+									frm_model_create.querySelector('.submit-btn').removeAttribute('disabled');
+									if(error.response.status == 422) {
+										showValidationErrors(error.response.data.errors, '#createModel');
 									}
-								})
-								.catch(function (error) {
-									if (error.response) {
-										frm_model_create.querySelector('.submit-btn').removeAttribute('disabled');
-										if(error.response.status == 422) {
-											showValidationErrors(error.response.data.errors, '#createModel');
-										}
-									}
-								});
-						});
-					}
+								}
+							});
+					});
 				}
-		} 
-	})
+			}
+
+			if(e.target.id == 'delete-link') {
+				e.preventDefault();
+				let modelId = e.target.dataset.id;
+				let modelName = e.target.dataset.name;
+
+				let _url = "{{route('admin.models.delete', ['gallery' => 'modelId'])}}";
+				let urlDelete = _url.replace('modelId', modelId);
+
+				Confirm.open({
+					title: "Подтверждение",
+					body: `Вы действительно хотите удалить модель ${modelName} из галереи?`,
+					okText: "Да",
+					cancelText: "Нет",
+					onOk: () => {
+						axios.delete(urlDelete)
+							.then(response => {
+								if(response.status == 200) {
+									localStorage.mdSuccess = true;
+									window.location.reload(true);
+								}
+							})
+							.catch(function (error) {});
+					},
+					onCancel: () => {},
+				});
+
+			}
+		}
+	});
 
 	frm_brand_edit_links.forEach(link => {
 		link.onclick = e => {
@@ -558,7 +600,7 @@
 			let logotype = e.target.dataset.logotype;
 			editBrandMode = true;
 
-			let _url = "{{route('admin.brand.update', ['gallery' => 'brandId'])}}";
+			let _url = "{{route('admin.brands.update', ['gallery' => 'brandId'])}}";
 			let _urlUpdate = _url.replace('brandId', e.target.dataset.id);
 
 			loadSingleFile(`/storage/${logotype}`);
@@ -597,7 +639,35 @@
 				});
 			}
 		}
+	})
 
+	frm_brand_delete_links.forEach(link => {
+		link.addEventListener('click', e => {
+			let target = e.target;
+			let brandId = target.dataset.id;
+			let brandName = target.dataset.name;
+
+				let _url = "{{route('admin.brands.delete', ['gallery' => 'brandId'])}}";
+				let urlDelete = _url.replace('brandId', brandId);
+
+				Confirm.open({
+					title: "Подтверждение",
+					body: `Вы действительно хотите удалить бренд ${brandName} из галереи? Все модели автомобилей, связанные с брендом, а также изображения галереи будут удалены!`,
+					okText: "Да",
+					cancelText: "Нет",
+					onOk: () => {
+						axios.delete(urlDelete)
+							.then(response => {
+								if(response.status == 200) {
+									localStorage.bdSuccess = true;
+									window.location.reload(true);
+								}
+							})
+							.catch(function (error) {});
+					},
+					onCancel: () => {},
+				});
+		})
 	})
 </script>
 @endpush

@@ -1,4 +1,4 @@
-<header class="header fixed top-0 left-0 right-0 w-full bg-blue-600 py-3 px-7">
+<header class="header block fixed top-0 left-0 right-0 w-full bg-blue-600 py-3 px-7">
     <div class="flex justify-center sm:justify-between items-center flex-wrap">
         <div class="logotype">
             <img src="/images/logo/logo-white.png" class="w-32 h-8 mx-auto" alt="Логотип компании">

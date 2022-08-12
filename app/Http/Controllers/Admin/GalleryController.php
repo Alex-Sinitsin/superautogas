@@ -23,8 +23,10 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        $brands = CarBrand::with('models')->get();
-        return view('admin.gallery.index', compact('brands'));
+        $brands = CarBrand::with('models')->paginate(6);
+        $brandsForSelect = CarBrand::all();
+
+        return view('admin.gallery.index', compact('brands', 'brandsForSelect'));
     }
 
     /**
@@ -64,7 +66,7 @@ class GalleryController extends Controller
                     $constraint->aspectRatio();
                 })->stream();
                 $hash = md5(Carbon::now() . $file->getClientOriginalName() . rand(0, 9999999));
-                $path = 'models/' . strtoupper($brand->slug) . '/' . strtoupper($model->slug) . '/' . $hash . '.' . $file->getClientOriginalExtension();
+                $path = 'models/' . strtoupper($brand->slug) . '/' . strtoupper($model->slug) . '/' . $hash . '.' . strtolower($file->getClientOriginalExtension());
 
                 Storage::disk('public')->put($path, $compressed_file, 'public');
                 $model->images()->create([
@@ -93,7 +95,7 @@ class GalleryController extends Controller
                 $constraint->aspectRatio();
             })->stream();
             $hash = md5(Carbon::now() . $file->getClientOriginalName() . rand(0, 9999999));
-            $path = 'brands/' . $hash . '.' . $file->getClientOriginalExtension();
+            $path = 'brands/' . $hash . '.' . strtolower($file->getClientOriginalExtension());
 
             Storage::disk('public')->put($path, $compressed_file, 'public');
 
@@ -128,7 +130,7 @@ class GalleryController extends Controller
                 $constraint->aspectRatio();
             })->stream();
             $hash = md5(Carbon::now() . $file->getClientOriginalName() . rand(0, 9999999));
-            $path = 'brands/' . $hash . '.' . $file->getClientOriginalExtension();
+            $path = 'brands/' . $hash . '.' . strtolower($file->getClientOriginalExtension());
 
             Storage::disk('public')->put($path, $compressed_file, 'public');
 
@@ -138,6 +140,42 @@ class GalleryController extends Controller
             $brand->save();
         }
         return response()->json(['status' => 200, 'message' => 'Бренд автомобиля успешно добавлен!']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyBrand($id)
+    {
+        $brand = CarBrand::findOrFail($id);
+        $models = CarModel::where('car_brand_id', '=', $id)->get();
+
+        foreach ($models as $model) {
+            $images = Gallery::where('car_model_id', '=', $model->id)->get();
+
+            foreach ($images as $image) {
+                if (Storage::disk('public')->exists($image->image)) {
+                    Storage::disk('public')->delete($image->image);
+
+                    $directoryModel = public_path('storage\\models\\' . strtoupper($brand->slug) . '\\' . strtoupper($model->slug));
+                    $directoryBrand = public_path('storage\\models\\' . strtoupper($brand->slug));
+
+                    $this->destroyDirectory($directoryModel);
+                    $this->destroyDirectory($directoryBrand);
+                } else {
+                    abort(404, 'File Not Found!');
+                }
+                $image->delete();
+            }
+
+            $model->delete();
+        }
+        $brand->delete();
+
+        return response()->json(['status' => 200, 'message' => 'Бренд автомобиля успешно удален!']);
     }
 
     /**
@@ -196,7 +234,7 @@ class GalleryController extends Controller
                         $constraint->aspectRatio();
                     })->stream();
                     $hash = md5(Carbon::now() . $file->getClientOriginalName() . rand(0, 9999999));
-                    $path = 'models/' . strtoupper($brand->slug) . '/' . strtoupper($model->slug) . '/' . $hash . '.' . $file->getClientOriginalExtension();
+                    $path = 'models/' . strtoupper($brand->slug) . '/' . strtoupper($model->slug) . '/' . $hash . '.' . strtolower($file->getClientOriginalExtension());
 
                     Storage::disk('public')->put($path, $compressed_file, 'public');
                     $model->images()->create([
@@ -214,9 +252,40 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function destroyModel($id)
+    {
+        $model = CarModel::findOrFail($id);
+        $brand = CarBrand::findOrFail($model->car_brand_id);
+        $images = Gallery::where('car_model_id', '=', $model->id)->get();
+
+        foreach ($images as $image) {
+            if (Storage::disk('public')->exists($image->image)) {
+                Storage::disk('public')->delete($image->image);
+
+                $directoryModel = public_path('storage\\models\\' . strtoupper($brand->slug) . '\\' . strtoupper($model->slug));
+                $directoryBrand = public_path('storage\\models\\' . strtoupper($brand->slug));
+
+                $this->destroyDirectory($directoryModel);
+                $this->destroyDirectory($directoryBrand);
+            } else {
+                abort(404, 'File Not Found!');
+            }
+            $image->delete();
+        }
+
+        $model->delete();
+
+        return response()->json(['status' => 200, 'message' => 'Модель автомобиля успешно удалена!']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
-        //TODO: Доделать проверку существования файлов в папке с изображениями бренда и, если она пустая - удалить
         $image = Gallery::findOrFail($id);
         $model = CarModel::findOrFail($image->car_model_id);
         $brand = CarBrand::findOrFail($model->car_brand_id);
