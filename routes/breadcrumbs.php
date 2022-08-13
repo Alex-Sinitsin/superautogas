@@ -53,3 +53,9 @@ Breadcrumbs::for('admin.galleries.show', function (BreadcrumbTrail $trail, $mode
     $trail->push($brand->name, route('galleries.index'));
     $trail->push($model->name, route('galleries.show', $model->slug));
 });
+
+//Testimonials
+Breadcrumbs::for('admin.testimonials', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Отзывы клиентов', route('testimonials.index'));
+});

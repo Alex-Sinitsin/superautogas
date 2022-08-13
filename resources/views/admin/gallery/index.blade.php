@@ -19,14 +19,7 @@
 		</div>
 	</x-page.header>
 
-	<div class="alerts">
-		@if (session()->has('success'))
-		<div class="bg-green-100 rounded-lg py-4 px-6 mb-4 text-base text-green-700" role="alert">
-			<i class="zmdi zmdi-notifications align-middle text-lg mr-2"></i>
-			<span class="align-middle">{{ session()->get('success') }}</span>
-		</div>
-		@endif
-	</div>
+	<div class="alerts"></div>
 
 	<div class="page-body relative">
 		<div class="gallery-grid 2xl:container 2xl:mx-auto">

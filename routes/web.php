@@ -36,6 +36,9 @@ Route::prefix('admin')->group(function () {
         Route::post('/galleries/update/{gallery}', [\App\Http\Controllers\Admin\GalleryController::class, 'update'])->name('admin.models.update');
         Route::delete('/galleries/delete/{gallery}', [\App\Http\Controllers\Admin\GalleryController::class, 'destroyModel'])->name('admin.models.delete');
 
+        //Testimonials
+        Route::resource('testimonials', \App\Http\Controllers\Admin\TestimonialController::class);
+
         Route::get('/logout', [\App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout.perform');
     });
 });
