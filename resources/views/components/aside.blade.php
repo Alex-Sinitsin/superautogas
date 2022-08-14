@@ -9,7 +9,7 @@
                 class="{{ active_link('posts*') }}" />
             <x-aside.link link="{{ route('galleries.index') }}" title="Наши работы" icon="collection-image"
                 class="{{ active_link('galleries*') }}" />
-            <x-aside.link link="{{ route('testimonials.index') }}" title="Отзывы клиентов" icon="comment-text"
+            <x-aside.link link="{{ route('testimonials.index') }}" title="Отзывы клиентов" icon="comments"
                 class="{{ active_link('testimonials*') }}" />
             <a href="#"
                 class="block text-base hover:bg-blue-700 hover:text-white font-medium px-7 py-2 transition-colors">

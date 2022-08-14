@@ -59,3 +59,8 @@ Breadcrumbs::for('admin.testimonials', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
     $trail->push('Отзывы клиентов', route('testimonials.index'));
 });
+
+Breadcrumbs::for('admin.testimonials.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.testimonials');
+    $trail->push('Создание нового отзыва', route('testimonials.create'));
+});

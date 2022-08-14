@@ -1,5 +1,6 @@
 @props([
 'model' => null,
+'name' => 'content',
 'disabledFields' => [],
 'post' => [],
 'label' => '',
@@ -13,9 +14,9 @@
 </label>
 @endif
 
-<textarea id="x" name="content" class="hidden">{!! $post ? $post->content : old('content') !!}</textarea>
+<textarea id="x" name="{{$name}}" class="hidden">{!! $post ? $post->content : old('content') !!}</textarea>
 <div class="trix {{$hidden ? 'hidden' : ''}}">
-    @trix($model, 'content', ['id' => 'x', 'hideTools' => $disabledFields ? $disabledFields : []])
+    @trix($model, 'content', ['id' => 'x', 'hideTools' => $disabledFields ?? []])
 </div>
 
 @error('content')
@@ -23,5 +24,5 @@
 @enderror
 
 @pushonce('trix')
-    @trixassets
+@trixassets
 @endpushonce

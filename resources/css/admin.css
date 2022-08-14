@@ -464,6 +464,21 @@ html body form div.select div.header span {
     @apply ring-4 rounded ring-green-600 transition-all;
 }
 
+.create-content .trix-button-group--file-tools,
+.edit-content .trix-button-group--file-tools {
+    display: none;
+}
+
+.tml-create-content #trix-toolbar-1 {
+    display: none;
+    visibility: hidden;
+}
+
+.tsml-rate {
+    cursor: pointer;
+    
+}
+
 @media screen and (max-width: 1000px) {
     .gallery-grid .grid-sizer,
     .gallery-grid .gallery-item {

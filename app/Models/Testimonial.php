@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Date\DateFormat;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Te7aHoudini\LaravelTrix\Traits\HasTrixRichText;
 
 class Testimonial extends Model
 {
     use HasFactory;
+    use HasTrixRichText;
 
     protected $fillable = [
         'nickname',
@@ -16,4 +19,9 @@ class Testimonial extends Model
         'text',
         'is_published'
     ];
+
+    public function getCreatedAtAttribute($attr)
+    {
+        return DateFormat::post($attr);
+    }
 }
