@@ -24,4 +24,9 @@ class Testimonial extends Model
     {
         return DateFormat::post($attr);
     }
+
+    public function getIsPublishedAtAttribute($attr)
+    {
+        $this->attributes['is_published'] = (bool) $attr;
+    }
 }

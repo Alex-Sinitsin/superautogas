@@ -29,6 +29,9 @@
         <x-post.card :post=$post />
         @endforeach
     </x-post.grid>
+    <div class="pagination-links my-4 2xl:container 2xl:mx-auto">
+        {{ $posts->links() }}
+    </div>
 </div>
 @endsection
 

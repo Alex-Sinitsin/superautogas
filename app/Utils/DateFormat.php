@@ -11,11 +11,11 @@ class DateFormat
     $published = date('d.m.Y', $timestamp);
 
     if ($published === date('d.m.Y')) {
-      return trans('date.today', ['time' => date('H:i', $timestamp)]);
+      return trans('date.today');
     } elseif ($published === date('d.m.Y', strtotime('-1 day'))) {
-      return trans('date.yesterday', ['time' => date('H:i', $timestamp)]);
+      return trans('date.yesterday');
     } else {
-      $formatted = trans('date.full_date', [
+      $formatted = trans('date.later', [
         'date' => date('d F Y', $timestamp)
       ]);
 

@@ -79,7 +79,7 @@
 			</x-gallery.item>
 			@endforeach
 		</div>
-		<div class="pagination-links my-5">
+		<div class="pagination-links my-4 2xl:container 2xl:mx-auto">
 			{{ $brands->links() }}
 		</div>
 	</div>

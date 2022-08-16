@@ -23,8 +23,8 @@
     <meta name="theme-color" content="#ffffff" />
     @vite('resources/css/app.css')
     @vite('resources/css/admin.css')
-    @stack('styles')
     @stack('trix')
+    @stack('styles')
 </head>
 
 <body class="admin-body">

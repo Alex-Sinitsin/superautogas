@@ -23,7 +23,7 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        $brands = CarBrand::with('models')->paginate(6);
+        $brands = CarBrand::with('models')->paginate(10);
         $brandsForSelect = CarBrand::all();
 
         return view('admin.gallery.index', compact('brands', 'brandsForSelect'));

@@ -18,7 +18,7 @@
             <x-form.input type="text" name="title" value="{{ old('title') }}" label="Заголовок"
                 placeholder="{{ __('Введите заголовок') }}" required />
 
-            <x-form.trix label="Контент" :disabledFields="['file-tools']" :model=$post required />
+            <x-form.trix label="Контент" :disabledFields="['file-tools']" value="{{old('content')}}" :model=$post required />
 
             <x-button type="submit" text="Сохранить" icon="card-sd" color="green"
                 class="bg-green-200 hover:bg-green-600 hover:text-white mt-5" />

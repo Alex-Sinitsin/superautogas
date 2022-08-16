@@ -469,14 +469,14 @@ html body form div.select div.header span {
     display: none;
 }
 
-.tml-create-content #trix-toolbar-1 {
+.tml-create-content #trix-toolbar-1,
+.tml-edit-content #trix-toolbar-1 {
     display: none;
     visibility: hidden;
 }
 
 .tsml-rate {
     cursor: pointer;
-    
 }
 
 @media screen and (max-width: 1000px) {

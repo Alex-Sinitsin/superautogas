@@ -1,7 +1,7 @@
 @props([
 'label' => '',
 'name' => '',
-'rating' => '0',
+'rating' => '',
 'className' => '',
 'required' => false
 ])

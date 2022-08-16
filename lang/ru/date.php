@@ -1,10 +1,9 @@
 <?php
 
 return [
-  'full_date'         => ':date',
-  'later'             => ':date в :time',
-  'today'             => 'сегодня в :time',
-  'yesterday'         => 'вчера в :time',
+  'later'             => ':date',
+  'today'             => 'сегодня',
+  'yesterday'         => 'вчера',
   'month_declensions' => [
     'January'   => 'Января',
     'February'  => 'Февраля',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TestimonialRequest;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class TestimonialController extends Controller
      */
     public function index()
     {
-        $testimonials = Testimonial::cursorPaginate(10);
+        $testimonials = Testimonial::paginate(10);
         return view('admin.testimonials.index', compact('testimonials'));
     }
 
@@ -36,9 +37,18 @@ class TestimonialController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TestimonialRequest $request)
     {
-        dd($request->all());
+        $data = $request->validated();
+        Testimonial::create([
+            'nickname' => $data['nickname'],
+            'car_model' => $data['car_model'],
+            'rating' => $data['rating'],
+            'text' => $data['text'],
+            'is_published' => $data['is_published'],
+        ]);
+
+        return redirect(route('testimonials.index'))->withSuccess('Отзыв клиента успешно создан!');
     }
 
     /**
@@ -60,7 +70,8 @@ class TestimonialController extends Controller
      */
     public function edit($id)
     {
-        //
+        $testimonial = Testimonial::findOrFail($id);
+        return view('admin.testimonials.edit', compact('testimonial'));
     }
 
     /**
@@ -70,9 +81,19 @@ class TestimonialController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TestimonialRequest $request, $id)
     {
-        //
+        $data = $request->validated();
+        $testimonial = Testimonial::findOrFail($id);
+
+        $testimonial->nickname = $data['nickname'];
+        $testimonial->car_model = $data['car_model'];
+        $testimonial->rating = $data['rating'];
+        $testimonial->text = $data['text'];
+        $testimonial->is_published = $data['is_published'];
+        $testimonial->save();
+
+        return redirect(route('testimonials.index'))->withSuccess('Отзыв клиента успешно обновлен!');
     }
 
     /**
@@ -83,6 +104,8 @@ class TestimonialController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $testimonial = Testimonial::findOrFail($id);
+        $testimonial->delete();
+        return redirect(route('testimonials.index'))->withSuccess('Отзыв клиента успешно удален!');
     }
 }

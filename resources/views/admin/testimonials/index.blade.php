@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="testimonials-item__body py-2">{{$testimonial->text}}</div>
+      <div class="testimonials-item__body py-2">{!! $testimonial->text !!}</div>
       <div class="testimonial-item__footer flex items-center">
         <div class="badges flex-1">
           <span
@@ -80,10 +80,12 @@
             </div>
             <div class="dropdown__content-item border-b-2 border-b-gray-100">
               <x-form method="PUT" action="{{ route('testimonials.update', ['testimonial' => $testimonial->id]) }}">
-                <x-form.input type="text" name="title" value="" class="hidden" />
-                <x-form.trix label="Контент" required hidden />
-                <x-form.checkbox name="is_published" label="Опубликовать" class="hidden" />
-                <x-button type="submit" text="Скрыть" icon="eye-off" class="px-2 hover:text-blue-900" />
+                <x-form.input type="hidden" name="nickname" value="{{$testimonial->nickname }}" />
+                <x-form.input type="hidden" name="car_model" value="{{ $testimonial->car_model}}" />
+                <x-form.input type="hidden" name="rating" class="rateInput" value="{{$testimonial->rating}}" />
+                <x-form.trix name='text' :model=$testimonial value="{{ $testimonial->text}}" hidden />
+                <x-form.checkbox name="is_published" :checked="!$testimonial->is_published" class="hidden" />
+
                 @if($testimonial->is_published)
                 <x-button type="submit" text="Скрыть" icon="eye-off" class="px-2 hover:text-blue-900" />
                 @else
@@ -102,7 +104,7 @@
     </div>
     @endforeach
   </div>
-  <div class="pagination-links my-5">
+  <div class="pagination-links my-4 2xl:container 2xl:mx-auto">
     {{ $testimonials->links() }}
   </div>
 </div>

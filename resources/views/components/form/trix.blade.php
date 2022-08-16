@@ -3,6 +3,7 @@
 'name' => 'content',
 'disabledFields' => [],
 'post' => [],
+'value' => "",
 'label' => '',
 'required' => false,
 'hidden' => false,
@@ -14,10 +15,14 @@
 </label>
 @endif
 
-<textarea id="x" name="{{$name}}" class="hidden">{!! $post ? $post->content : old('content') !!}</textarea>
+<textarea id="x" name="{{$name}}" class="hidden">{!! $post ? $post->content : $value !!}</textarea>
 <div class="trix {{$hidden ? 'hidden' : ''}}">
     @trix($model, 'content', ['id' => 'x', 'hideTools' => $disabledFields ?? []])
 </div>
+
+@error($name)
+<span class="text-red-600 my-2 block">{{ $message }}</span>
+@enderror
 
 @error('content')
 <span class="text-red-600 my-2 block">{{ $message }}</span>
