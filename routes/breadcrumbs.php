@@ -5,7 +5,7 @@ use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
 // Admin
 Breadcrumbs::for('admin', function (BreadcrumbTrail $trail) {
-    $trail->push('Главная', route('admin.index'));
+    $trail->push('Главная', route('admin.dashboard.index'));
 });
 
 // Posts
@@ -59,14 +59,17 @@ Breadcrumbs::for('admin.testimonials', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
     $trail->push('Отзывы клиентов', route('testimonials.index'));
 });
-
 Breadcrumbs::for('admin.testimonials.create', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.testimonials');
     $trail->push('Создание нового отзыва', route('testimonials.create'));
 });
-
-
 Breadcrumbs::for('admin.testimonials.edit', function (BreadcrumbTrail $trail, $testimonial) {
     $trail->parent('admin.testimonials');
     $trail->push('Редактирование отзыва', route('testimonials.edit', $testimonial->id));
+});
+
+//Certificates
+Breadcrumbs::for('admin.certificates', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Сертификаты компании', route('admin.certificates.index'));
 });

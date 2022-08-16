@@ -15,22 +15,22 @@
         </x-page.title>
         <div
             class="period-button-group flex items-center justify-center sm:justify-end flex-wrap mt-5 w-full lg:mt-0 sm:w-fit">
-            <a href="{{ route('admin.index', ['period'=> 7]) }}" class="period-metrika-link px-3 py-1.5 mr-2 my-1 bg-green-200 text-green-800 text-sm rounded
+            <a href="{{ route('admin.dashboard.index', ['period'=> 7]) }}" class="period-metrika-link px-3 py-1.5 mr-2 my-1 bg-green-200 text-green-800 text-sm rounded
                 hover:bg-green-600 hover:text-white transition-colors @if (request()->query('period') == 7 ||
                 request()->query('period') == null) is-active-metrika-link @endif">
                 <span>{{ __('Неделя') }}</span>
             </a>
-            <a href="{{ route('admin.index', ['period'=> 30]) }}" class="period-metrika-link px-3 py-1.5 mr-2 my-1 bg-green-200 text-green-800 text-sm rounded
+            <a href="{{ route('admin.dashboard.index', ['period'=> 30]) }}" class="period-metrika-link px-3 py-1.5 mr-2 my-1 bg-green-200 text-green-800 text-sm rounded
                 hover:bg-green-600 hover:text-white transition-colors @if (request()->query('period') == 30)
                 is-active-metrika-link @endif">
                 <span>{{ __('Месяц') }}</span>
             </a>
-            <a href="{{ route('admin.index', ['period'=> 90]) }}" class="period-metrika-link px-3 py-1.5 mr-2 my-1 bg-green-200 text-green-800 text-sm rounded
+            <a href="{{ route('admin.dashboard.index', ['period'=> 90]) }}" class="period-metrika-link px-3 py-1.5 mr-2 my-1 bg-green-200 text-green-800 text-sm rounded
                 hover:bg-green-600 hover:text-white transition-colors @if (request()->query('period') == 90)
                 is-active-metrika-link @endif">
                 <span>{{ __('Квартал') }}</span>
             </a>
-            <a href="{{ route('admin.index', ['period'=> 365]) }}" class="period-metrika-link px-3 py-1.5 my-1 bg-green-200 text-green-800 text-sm rounded
+            <a href="{{ route('admin.dashboard.index', ['period'=> 365]) }}" class="period-metrika-link px-3 py-1.5 my-1 bg-green-200 text-green-800 text-sm rounded
                 hover:bg-green-600 hover:text-white transition-colors @if (request()->query('period') == 365)
                 is-active-metrika-link @endif">
                 <span>{{ __('Год') }}</span>

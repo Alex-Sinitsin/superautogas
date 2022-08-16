@@ -479,6 +479,16 @@ html body form div.select div.header span {
     cursor: pointer;
 }
 
+.dz-wrapper {
+    visibility: hidden;
+}
+
+.dz-wrapper.active {
+    visibility: visible;
+    opacity: 1;
+    @apply transition-opacity duration-300 ease-linear;
+}
+
 @media screen and (max-width: 1000px) {
     .gallery-grid .grid-sizer,
     .gallery-grid .gallery-item {

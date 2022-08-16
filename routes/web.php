@@ -22,7 +22,7 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::group(['middleware' => ['auth']], function () {
-        Route::get('/', \App\Http\Controllers\Admin\AdminController::class)->name('admin.index');
+        Route::get('/dashboard', \App\Http\Controllers\Admin\AdminController::class)->name('admin.dashboard.index');
         //Posts
         Route::resource('posts', \App\Http\Controllers\Admin\PostController::class);
         Route::post('posts/upload', [\App\Http\Controllers\Admin\PostController::class, 'upload']);
@@ -35,9 +35,12 @@ Route::prefix('admin')->group(function () {
         Route::delete('/galleries/brand/delete/{gallery}', [\App\Http\Controllers\Admin\GalleryController::class, 'destroyBrand'])->name('admin.brands.delete');
         Route::post('/galleries/update/{gallery}', [\App\Http\Controllers\Admin\GalleryController::class, 'update'])->name('admin.models.update');
         Route::delete('/galleries/delete/{gallery}', [\App\Http\Controllers\Admin\GalleryController::class, 'destroyModel'])->name('admin.models.delete');
-
         //Testimonials
         Route::resource('testimonials', \App\Http\Controllers\Admin\TestimonialController::class);
+        //Certificates
+        Route::get('/certificates', [\App\Http\Controllers\Admin\CertificateController::class, 'index'])->name('admin.certificates.index');
+        Route::post('/certificates/store', [\App\Http\Controllers\Admin\CertificateController::class, 'store'])->name('admin.certificates.store');
+        Route::delete('/certificates/{certificate}/delete', [\App\Http\Controllers\Admin\CertificateController::class, 'destroy'])->name('admin.certificates.destroy');
 
         Route::get('/logout', [\App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout.perform');
     });

@@ -27,7 +27,7 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        if(!Auth::validate($request->validated())):
+        if (!Auth::validate($request->validated())) :
             return redirect()->to(route('admin.login'))
                 ->withInput()
                 ->withErrors(['auth' => trans('auth.failed', [], 'ru')]);
@@ -37,7 +37,7 @@ class LoginController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('admin.index', ['period' => 7]));
+        return redirect(route('admin.dashboard.index', ['period' => 7]));
     }
 
     /**
