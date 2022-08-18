@@ -208,7 +208,6 @@
 	}
 
 	window.addEventListener("load", function() {
-		let alertsDiv = document.querySelector('.alerts');
 		editModelMode = false;
 		deleteImageMode = false;
 		editBrandMode = false;

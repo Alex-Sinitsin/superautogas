@@ -31,6 +31,8 @@
     <x-header />
     <div class="content-wrapper relative flex h-screen">
         @yield('content')
+        <x-button type="button" icon="arrow-right" id="hamburger"
+            class="absolute z-20 bottom-5 left-4 h-fit px-3 py-1 text-xl rounded-md border border-gray-200 md:hidden" />
     </div>
 
     @vite('resources/js/app.js')

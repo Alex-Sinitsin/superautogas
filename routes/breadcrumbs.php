@@ -73,3 +73,14 @@ Breadcrumbs::for('admin.certificates', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
     $trail->push('Сертификаты компании', route('admin.certificates.index'));
 });
+
+//Users
+Breadcrumbs::for('admin.users', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Пользователи', route('users.index'));
+});
+
+Breadcrumbs::for('admin.users.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.users');
+    $trail->push('Добавление нового пользователя', route('users.create'));
+});

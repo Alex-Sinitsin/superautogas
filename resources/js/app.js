@@ -21,6 +21,14 @@ window.onload = function () {
     }
 
     setContentMarginFromTop();
+
+    let hamburgerMenu = document.querySelector("#hamburger");
+
+    hamburgerMenu.addEventListener("click", (e) => {
+        let sidebar = document.querySelector(".sidebar");
+        sidebar.classList.toggle("active");
+        e.target.classList.toggle("active");
+    });
 };
 
 window.addEventListener("resize", () => {

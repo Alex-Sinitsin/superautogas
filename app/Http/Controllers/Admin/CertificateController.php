@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CertificateRequest;
 use App\Models\Certificate;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -28,7 +29,7 @@ class CertificateController extends Controller
                 $compressed_file->resize(null, 1600, function ($constraint) {
                     $constraint->aspectRatio();
                 })->stream();
-                $hash = md5(uniqid() . $file->getClientOriginalName() . rand(0, 9999999));
+                $hash = md5(Carbon::now() . $file->getClientOriginalName() . rand(0, 9999999));
                 $path = 'certificates/' . $hash . '.' . strtolower($file->getClientOriginalExtension());
 
                 Storage::disk('public')->put($path, $compressed_file, 'public');
@@ -43,7 +44,7 @@ class CertificateController extends Controller
     public function destroy($id)
     {
         $certificate = Certificate::findOrFail($id);
-        
+
         if (Storage::disk('public')->exists($certificate->image)) {
             Storage::disk('public')->delete($certificate->image);
             $path = public_path('storage\\certificates');
@@ -54,7 +55,7 @@ class CertificateController extends Controller
         }
         $certificate->delete();
 
-        return redirect(route('admin.certificates.index'))->withSuccess('Сертификат успешно удален!');
+        return response()->json(['status' => 200, 'message' => 'Сертификат успешно удален!']);
     }
 
     protected function destroyDirectory($directory)

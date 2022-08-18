@@ -2,12 +2,25 @@
     overflow-y: hidden;
 }
 
+button:disabled {
+    @apply bg-slate-300 text-slate-700 select-none;
+}
+
+button:disabled:hover {
+    @apply bg-slate-300 text-slate-700 select-none;
+}
+
 trix-toolbar {
     position: sticky;
     top: 0;
     z-index: 1;
     background-color: #fff;
     margin: 0 10px;
+}
+
+button.disabled,
+button.disabled:hover {
+    @apply bg-slate-300 text-slate-700 cursor-default pointer-events-none select-none;
 }
 
 .pages .pages-body .attachment figcaption {
@@ -295,10 +308,9 @@ html body form div.select datalist {
 
 html body form div.select datalist div.option {
     background-color: white;
-    margin-bottom: 1px;
+    @apply border-b border-b-gray-200;
     cursor: pointer;
-    padding: 0.5em;
-    border-width: 0;
+    padding: 0.7em 0.5em;
 }
 
 html body form div.select datalist div.option:first-child {
@@ -306,7 +318,7 @@ html body form div.select datalist div.option:first-child {
 }
 
 html body form div.select datalist div.option:last-child {
-    @apply rounded-bl rounded-br;
+    @apply rounded-bl rounded-br border-b-0;
 }
 
 html body form div.select datalist div.option:hover {
@@ -489,6 +501,26 @@ html body form div.select div.header span {
     @apply transition-opacity duration-300 ease-linear;
 }
 
+.sidebar {
+    transition: left 300ms ease-in;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+#hamburger i.zmdi {
+    transform: rotate(0deg);
+    animation: 300ms linear 0s normal none running rotateBack;
+    -webkit-animation: 300ms linear 0s normal none running rotateBack;
+}
+
+#hamburger.active i.zmdi {
+    transform: rotate(-180deg);
+    animation: 300ms linear 0s normal none running rotate;
+    -webkit-animation: 300ms linear 0s normal none running rotate;
+}
+
 @media screen and (max-width: 1000px) {
     .gallery-grid .grid-sizer,
     .gallery-grid .gallery-item {
@@ -513,6 +545,13 @@ html body form div.select div.header span {
     }
 }
 
+@media screen and (min-width: 427px) and (max-width: 767px) {
+    .sidebar {
+        box-shadow: 0 15px 30px 5px rgba(0, 0, 0, 0.3);
+        @apply rounded-tr-md rounded-br-md;
+    }
+}
+
 @media screen and (max-width: 639px) {
     .gallery-grid .grid-sizer,
     .gallery-grid .gallery-item,
@@ -524,6 +563,18 @@ html body form div.select div.header span {
 }
 
 @media screen and (max-width: 426px) {
+    .sidebar {
+        width: 100%;
+    }
+
+    .sidebar .menu-wrapper {
+        width: 100%;
+    }
+
+    #hamburger {
+        bottom: 3rem;
+    }
+
     .header .logotype {
         margin-bottom: 10px;
         width: 100%;
@@ -545,5 +596,23 @@ html body form div.select div.header span {
         align-items: center;
         justify-content: center;
         margin-top: 15px;
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-180deg);
+    }
+}
+
+@keyframes rotateBack {
+    0% {
+        transform: rotate(-180deg);
+    }
+    100% {
+        transform: rotate(0deg);
     }
 }

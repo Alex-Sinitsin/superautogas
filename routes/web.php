@@ -41,6 +41,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/certificates', [\App\Http\Controllers\Admin\CertificateController::class, 'index'])->name('admin.certificates.index');
         Route::post('/certificates/store', [\App\Http\Controllers\Admin\CertificateController::class, 'store'])->name('admin.certificates.store');
         Route::delete('/certificates/{certificate}/delete', [\App\Http\Controllers\Admin\CertificateController::class, 'destroy'])->name('admin.certificates.destroy');
+        //Users
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
 
         Route::get('/logout', [\App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout.perform');
     });

@@ -35,11 +35,13 @@
 			const onclick = function(e) {
 					const disabled = this.hasAttribute('data-disabled');
 					select.value = this.dataset.value;
-					img.src = this.dataset.image;
-					img.classList.add('ml-2', 'mr-1')
-					img.width = 35;
-					img.height = 35;
-					header.insertBefore(img, span);
+					if(this.dataset.image !== undefined) {
+						img.src = this.dataset.image;
+						img.classList.add('ml-2', 'mr-1')
+						img.width = 35;
+						img.height = 35;
+						header.insertBefore(img, span);
+					}
 					span.innerText = this.dataset.label;
 					if (disabled) return;
 					if (multiple) {
@@ -73,7 +75,7 @@
 			select.tabIndex = -1;
 			span.innerText = select.label;
 			header.appendChild(span);
-			header.appendChild(img);
+			if(img.src !== undefined) header.appendChild(img);
 			for (attribute of select.attributes) div.dataset[attribute.name] = attribute.value;
 			for (i = 0; i < options.length; i++) {
 					const option = document.createElement('div');
@@ -84,17 +86,19 @@
 					option.classList.add('option');
 					label.classList.add('label', 'inline-block', 'align-middle');
 					label.innerText = o.label;
-					img.src = o.attributes.image.value;
-					img.classList.add('inline-block', 'align-middle', 'mr-2')
-					img.width = 35;
-					img.height = 35;
+					if(o.attributes.image !== undefined) {
+						img.src = o.attributes.image.value;
+						img.classList.add('inline-block', 'align-middle', 'mr-2')
+						img.width = 35;
+						img.height = 35;
+						option.dataset.image = o.attributes.image.value;
+					}
 					option.dataset.value = o.value;
 					option.dataset.label = o.label;
-					option.dataset.image = o.attributes.image.value;
 					option.onclick = onclick;
 					option.onkeyup = onkeyup;
 					option.tabIndex = i + 1;
-					option.appendChild(img);
+					if(o.attributes.image !== undefined) option.appendChild(img);
 					option.appendChild(label);
 					datalist.appendChild(option);
 			}
@@ -117,18 +121,20 @@
 						option.classList.add('option');
 						label.classList.add('label', 'inline-block', 'align-middle');
 						label.innerText = o.label;
-						img.src = o.attributes.image.value;
-						img.classList.add('inline-block', 'align-middle', 'mr-2')
-						img.width = 35;
-						img.height = 35;
+						if(o.attributes.image != undefined) {
+							img.src = o.attributes.image.value;
+							img.classList.add('inline-block', 'align-middle', 'mr-2')
+							img.width = 35;
+							img.height = 35;
+							option.dataset.image = o.attributes.image.value;
+						}
 						option.tabIndex = i + 1;
 						option.dataset.value = o.value;
 						option.dataset.label = o.label;
-						option.dataset.image = o.attributes.image.value;
 						option.onclick = onclick;
 						option.onkeyup = onkeyup;
 						option.tabIndex = i + 1;
-						option.appendChild(img);
+						if(o.attributes.image !== undefined) option.appendChild(img);
 						option.appendChild(label);
 						optgroup.appendChild(option);
 				};
@@ -168,21 +174,29 @@
 			if(o.attributes.checked) {
 				select.value = o.attributes.value.value
 				span.innerText = o.attributes.label.value;
-				img.src = o.attributes.image.value;
-				img.classList.add('ml-2', 'mr-1')
-				img.width = 35;
-				img.height = 35;
-				header.appendChild(span, img);
+				if(o.attributes.image !== undefined) {
+					img.src = o.attributes.image.value;
+					img.classList.add('ml-2', 'mr-1')
+					img.width = 35;
+					img.height = 35;
+					header.appendChild(span, img);
+				} else {
+					header.appendChild(span);
+				}
 			} 
 		});
 		if(options.length > 0) {
 			select.value = options[0].attributes.value.value
 			span.innerText = options[0].attributes.label.value;
-			img.src = options[0].attributes.image.value;
-			img.classList.add('ml-2', 'mr-1')
-			img.width = 35;
-			img.height = 35;
-			header.appendChild(span, img);
+			if(options[0].attributes.image !== undefined) {
+				img.src = options[0].attributes.image.value;
+				img.classList.add('ml-2', 'mr-1')
+				img.width = 35;
+				img.height = 35;
+				header.appendChild(span, img);
+			} else {
+				header.appendChild(span);
+			}
 		} else {
 			select.value = '';
 			span.innerText = "{{$placeholder}}";

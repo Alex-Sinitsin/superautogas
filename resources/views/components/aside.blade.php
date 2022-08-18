@@ -1,4 +1,5 @@
-<aside {{ $attributes->class(["sidebar p-3 bg-gray-100 h-full, hidden md:block"]) }}>
+<aside {{ $attributes->class(["sidebar p-3 bg-gray-100 h-full absolute left-[-100%] md:left-0 md:relative md:block"])
+    }}>
     <div class="menu-wrapper py-5 w-56">
         <x-aside.item title="Статистика">
             <x-aside.link link="{{ route('admin.dashboard.index', ['period' => 7]) }}" title="Яндекс Метрика"
@@ -19,11 +20,8 @@
                 class="{{ active_link('pages*') }}" />
         </x-aside.item>
         <x-aside.item title="Администрирование">
-            <a href="#"
-                class="block text-base hover:bg-blue-700 hover:text-white font-medium px-7 py-2 transition-colors">
-                <i class="zmdi zmdi-accounts mr-1.5 icon"></i>
-                <span>{{__('Пользователи')}}</span>
-            </a>
+            <x-aside.link link="{{ route('users.index') }}" title="Пользователи" icon="accounts"
+                class="{{ active_link('users*') }}" />
         </x-aside.item>
     </div>
 </aside>
