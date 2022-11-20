@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostStoreRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -34,19 +37,36 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(PostStoreRequest $request)
     {
+        //TODO: На клиенте сделать перенаправление на главную страницу постов при успехе создания поста
         $data = $request->validated();
-        Post::create([
-            'title' => $data['title'],
-            'content' => $data['content'],
-            'post-trixFields' => request('post-trixFields'),
-            'attachment-post-trixFields' => request('attachment-post-trixFields')
-        ]);
 
-        return redirect(route('posts.index'))->withSuccess('Новость успешно создана!');
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $compressed_file = Image::make($file->getRealPath());
+            $compressed_file->resize(250, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->stream();
+            $hash = md5(Carbon::now() . $file->getClientOriginalName() . rand(0, 9999999));
+            $path = 'uploads/' . $hash . '.' . strtolower($file->getClientOriginalExtension());
+
+            Storage::disk('public')->put($path, $compressed_file, 'public');
+
+            $data['image'] = $path;
+
+            Post::create([
+                'title' => $data['title'],
+                'content' => $data['content'],
+                'image' => $data['image'],
+                'post-trixFields' => request('post-trixFields'),
+                'attachment-post-trixFields' => request('attachment-post-trixFields')
+            ]);
+
+            return response()->json(['status' => 200, 'message' => 'Новость успешно добавлена!']);
+        }
     }
 
     /**
