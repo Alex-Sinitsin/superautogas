@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Алексей Артемович',
             'email' => 'lehych99@gmail.com',
-            'password' => 123,
+            'password' => "laravel",
             'role' => 'admin'
         ]);
         Post::factory(5)->create();

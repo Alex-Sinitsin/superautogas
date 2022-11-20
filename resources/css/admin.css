@@ -476,11 +476,6 @@ html body form div.select div.header span {
     @apply ring-4 rounded ring-green-600 transition-all;
 }
 
-.create-content .trix-button-group--file-tools,
-.edit-content .trix-button-group--file-tools {
-    display: none;
-}
-
 .tml-create-content #trix-toolbar-1,
 .tml-edit-content #trix-toolbar-1 {
     display: none;
