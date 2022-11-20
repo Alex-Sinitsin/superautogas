@@ -41,8 +41,8 @@ class PageController extends Controller
         Page::create([
             'title' => $data['title'],
             'content' => $data['content'],
-            'post-trixFields' => request('post-trixFields'),
-            'attachment-post-trixFields' => request('attachment-post-trixFields')
+            'page-trixFields' => request('page-trixFields'),
+            'attachment-page-trixFields' => request('attachment-page-trixFields')
         ]);
 
         return redirect(route('pages.index'))->withSuccess('Страница успешно создана!');
